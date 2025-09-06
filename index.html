@@ -190,7 +190,7 @@
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-black mb-4">El proceso es el valor</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    No prometemos transformar tu vida. Pero capaz sí tu semana.
+                    Arrancamos con la Dimensión Creativa. Un espacio para hacer con las manos.
                 </p>
             </div>
             
@@ -241,32 +241,23 @@
     <section id="talleres" class="py-20">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-black mb-4">Nuestras Dimensiones</h2>
+                <h2 class="text-4xl md:text-5xl font-black mb-4">Dimensión Creativa</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Cinco espacios, infinitas posibilidades de expresión
+                    Empezamos con talleres de creación manual. El hacer con las manos como camino.
                 </p>
             </div>
             
-            <!-- Tabs -->
-            <div class="flex flex-wrap justify-center gap-2 mb-12">
-                <button @click="activeTab = 'todos'" :class="activeTab === 'todos' ? 'bg-coral text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full transition-all">
-                    Todos
-                </button>
-                <button @click="activeTab = 'carpinteria'" :class="activeTab === 'carpinteria' ? 'bg-coral text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full transition-all">
-                    Carpintería
-                </button>
-                <button @click="activeTab = 'restauracion'" :class="activeTab === 'restauracion' ? 'bg-coral text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full transition-all">
-                    Restauración
-                </button>
-                <button @click="activeTab = 'modelado'" :class="activeTab === 'modelado' ? 'bg-coral text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full transition-all">
-                    Modelado
-                </button>
+            <!-- Subtitulo -->
+            <div class="text-center mb-12">
+                <p class="text-lg text-gray-600">
+                    Cuatro talleres para empezar tu proceso creativo
+                </p>
             </div>
             
             <!-- Talleres Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Taller de Carpintería -->
-                <div x-show="activeTab === 'todos' || activeTab === 'carpinteria'" x-transition class="group">
+                <div class="group">
                     <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="imagenes/mesa-trabajo-madera.jpg" alt="Mesa de trabajo de madera" class="w-full h-full object-cover" loading="lazy">
@@ -290,7 +281,7 @@
                 </div>
                 
                 <!-- Taller de Restauración -->
-                <div x-show="activeTab === 'todos' || activeTab === 'restauracion'" x-transition class="group">
+                <div class="group">
                     <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="imagenes/taladro-banco-herramientas.jpg" alt="Taladro de banco y herramientas" class="w-full h-full object-cover" loading="lazy">
@@ -314,7 +305,7 @@
                 </div>
                 
                 <!-- Taller de Modelado Adultos -->
-                <div x-show="activeTab === 'todos' || activeTab === 'modelado'" x-transition class="group">
+                <div class="group">
                     <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="imagenes/detalle-herramientas-1.jpg" alt="Herramientas de cerámica y escultura" class="w-full h-full object-cover" loading="lazy">
@@ -338,7 +329,7 @@
                 </div>
                 
                 <!-- Taller de Modelado Niños/Jóvenes -->
-                <div x-show="activeTab === 'todos' || activeTab === 'modelado'" x-transition class="group">
+                <div class="group">
                     <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
                         <div class="h-48 relative overflow-hidden">
                             <img src="imagenes/detalle-herramientas-2.jpg" alt="Herramientas textiles y creativas" class="w-full h-full object-cover" loading="lazy">
@@ -361,31 +352,76 @@
                     </div>
                 </div>
                 
-                <!-- Próximos Talleres -->
-                <div x-show="activeTab === 'todos'" x-transition class="group">
-                    <div class="bg-gradient-to-br from-purpura/10 to-purpura/5 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
-                        <div class="h-48 relative overflow-hidden flex items-center justify-center">
-                            <div class="text-center">
-                                <svg class="w-20 h-20 text-purpura mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                </svg>
-                                <p class="text-purpura font-bold">Nuevos talleres</p>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-2">Próximamente</h3>
-                            <div class="text-gray-600 space-y-2 mb-4">
-                                <p>• Cerámica</p>
-                                <p>• Pintura</p>
-                                <p>• Textil</p>
-                                <p class="text-sm mt-3">Dejanos tu contacto para avisarte cuando abran las inscripciones</p>
-                            </div>
-                            <a href="https://wa.me/542213627269?text=Hola!%20Quiero%20que%20me%20avisen%20sobre%20nuevos%20talleres" target="_blank" class="block text-center bg-purpura text-white px-4 py-2 rounded-full hover:bg-purpura/90 transition-all">
-                                Quiero info
-                            </a>
-                        </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Futuras Dimensiones -->
+    <section class="py-20 bg-gradient-to-br from-blanco-hueso to-gris-claro/20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Próximamente: Más Dimensiones</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Estamos preparando nuevos espacios creativos para vos
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                <!-- Dimensión Metal -->
+                <div class="bg-white/50 backdrop-blur rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gray-300/30 rounded-full organic-shape-2 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
                     </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-700">Dimensión Metal</h3>
+                    <p class="text-sm text-gray-500">Herrería artística y soldadura creativa</p>
                 </div>
+                
+                <!-- Dimensión Tierra -->
+                <div class="bg-white/50 backdrop-blur rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-orange-200/30 rounded-full organic-shape flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-700">Dimensión Tierra</h3>
+                    <p class="text-sm text-gray-500">Cerámica y escultura</p>
+                </div>
+                
+                <!-- Dimensión Textil -->
+                <div class="bg-white/50 backdrop-blur rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-pink-100/30 rounded-full organic-shape-3 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-700">Dimensión Textil</h3>
+                    <p class="text-sm text-gray-500">Tejido, bordado y teñido natural</p>
+                </div>
+                
+                <!-- Dimensión Arte -->
+                <div class="bg-white/50 backdrop-blur rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 bg-purpura/20 rounded-full organic-shape-2 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-purpura" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-700">Dimensión Arte</h3>
+                    <p class="text-sm text-gray-500">Pintura, dibujo y técnicas mixtas</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-600 mb-4">
+                    Suscribite para recibir novedades sobre nuevos talleres y dimensiones
+                </p>
+                <a href="https://wa.me/542213627269?text=Hola!%20Quiero%20recibir%20novedades%20sobre%20las%20nuevas%20dimensiones%20de%20Trinomio" 
+                   target="_blank" 
+                   class="inline-block bg-coral text-white px-8 py-3 rounded-full hover:bg-coral/90 transition-all">
+                    Mantenerme informado
+                </a>
             </div>
         </div>
     </section>
@@ -488,10 +524,10 @@
     <section class="py-20 bg-gradient-to-br from-coral to-coral/80">
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-4xl md:text-5xl font-black text-white mb-6">
-                ¿Listo para empezar tu proceso?
+                ¿Listo para empezar tu proceso creativo?
             </h2>
             <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-                No prometemos transformar tu vida. Pero capaz sí tu semana.
+                Sumate a la Dimensión Creativa. Empezá hoy tu camino del hacer.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="https://taplink.cc/trinomiocb" target="_blank" class="bg-white text-coral px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all">
