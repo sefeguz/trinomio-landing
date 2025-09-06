@@ -9,7 +9,9 @@
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" repo create trinomio-landing --public --description \"Landing page para Trinomio - Espacio de talleres creativos y artesanales\" --source=. --remote=origin --push)",
       "Bash(git push:*)",
       "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" repo view --web)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(start trinomio-landing.html)"
     ],
     "deny": [],
     "ask": []

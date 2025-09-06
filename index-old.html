@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trinomio - Un espacio para aprender haciendo, compartir sin obligación y estar bien. Talleres de madera, cerámica, arte y más.">
+    <meta name="keywords" content="talleres, artesanía, madera, cerámica, arte, bienestar, creatividad">
+    <meta property="og:title" content="Trinomio - Espacio de talleres creativos">
+    <meta property="og:description" content="Un espacio donde hacer tenga lógica y propósito. Talleres de madera, cerámica, arte y más en La Plata.">
+    <meta property="og:image" content="imagenes/logo-pared-trinomio.jpg">
+    <meta property="og:url" content="https://sefeguz.github.io/trinomio-landing">
+    <meta property="og:type" content="website">
+    <title>Trinomio - Espacio de talleres creativos</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="logo-trinomio.png" alt="Trinomio Logo" class="logo" width="40" height="40">
+                <span class="brand-text">TRINOMIO</span>
+            </div>
+            <button class="nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#valores">Valores</a></li>
+                <li><a href="#talleres">Talleres</a></li>
+                <li><a href="#testimonios">Experiencias</a></li>
+                <li><a href="#contacto" class="btn-nav">Empezá hoy</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" data-aos="fade-up">
+                    <span class="highlight">¿Te equivocaste?</span><br>
+                    Bien. Estás haciendo.
+                </h1>
+                <p class="hero-text" data-aos="fade-up" data-aos-delay="100">
+                    Un espacio donde hacer tenga lógica y propósito. Donde aprender 
+                    haciendo, sin exigencias, con técnica y estética, en comunidad.
+                </p>
+                <div class="hero-buttons" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#talleres" class="btn btn-primary">Explorar talleres</a>
+                    <a href="#valores" class="btn btn-secondary">Conocer más</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <img src="imagenes/logo-pared-trinomio.jpg" alt="Espacio Trinomio" class="hero-image" loading="lazy">
+                <div class="organic-shape"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values" id="valores">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                No se trata de hacerlo perfecto.<br>
+                <span class="highlight">Se trata de hacerlo tuyo.</span>
+            </h2>
+            <div class="values-grid">
+                <div class="value-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="value-icon">
+                        <svg width="60" height="60" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="#E86D5A" opacity="0.2"/>
+                            <path d="M50 30 L50 70 M30 50 L70 50" stroke="#E86D5A" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <h3>Bienestar</h3>
+                    <p>Un momento para estar, hacer, crear y compartir con otros.</p>
+                </div>
+                <div class="value-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="value-icon">
+                        <svg width="60" height="60" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="#2E5266" opacity="0.2"/>
+                            <path d="M30 50 Q50 30 70 50 Q50 70 30 50" fill="#2E5266"/>
+                        </svg>
+                    </div>
+                    <h3>Creatividad</h3>
+                    <p>Explorar sin miedo, con método pero sin rigidez.</p>
+                </div>
+                <div class="value-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="value-icon">
+                        <svg width="60" height="60" viewBox="0 0 100 100">
+                            <rect x="30" y="30" width="40" height="40" fill="#D9A441" opacity="0.2"/>
+                            <circle cx="50" cy="50" r="15" fill="#D9A441"/>
+                        </svg>
+                    </div>
+                    <h3>Pausa</h3>
+                    <p>Desconectar para volver a conectar con lo esencial.</p>
+                </div>
+                <div class="value-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="value-icon">
+                        <svg width="60" height="60" viewBox="0 0 100 100">
+                            <circle cx="35" cy="50" r="20" fill="#A7B7A1" opacity="0.3"/>
+                            <circle cx="65" cy="50" r="20" fill="#A7B7A1" opacity="0.3"/>
+                            <circle cx="50" cy="50" r="20" fill="#A7B7A1" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <h3>Comunidad</h3>
+                    <p>Compartir sin obligación, estar sin necesidad de explicarlo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proposition Section -->
+    <section class="proposition">
+        <div class="container">
+            <div class="prop-content">
+                <div class="prop-text" data-aos="fade-right">
+                    <h2>Cultura del hacer sin presión</h2>
+                    <p class="lead">
+                        En la mayoría de los talleres similares, el foco está puesto en aprender 
+                        una técnica, terminar un producto o adquirir una habilidad específica.
+                    </p>
+                    <p>
+                        En este espacio, el foco está en cómo lo vivís mientras lo hacés. 
+                        <strong>El resultado no es la prioridad. El proceso es el valor.</strong>
+                    </p>
+                    <blockquote>
+                        "No prometemos transformar tu vida. Pero capaz sí tu semana. 
+                        Y a veces, eso alcanza."
+                    </blockquote>
+                </div>
+                <div class="prop-visual" data-aos="fade-left">
+                    <img src="imagenes/mesa-trabajo-madera.jpg" alt="Mesa de trabajo en Trinomio" class="prop-image" loading="lazy">
+                    <div class="organic-frame"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workshops Section -->
+    <section class="workshops" id="talleres">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                Las dimensiones del hacer
+            </h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                No hay una única forma de habitar el hacer. Por eso usamos la idea de 
+                dimensiones para organizar lo que pasa en el espacio.
+            </p>
+            
+            <div class="workshop-grid">
+                <div class="workshop-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="workshop-header" style="background: linear-gradient(135deg, #8B6F47 0%, #6B5637 100%);">
+                        <svg class="workshop-icon" width="40" height="40" viewBox="0 0 100 100">
+                            <rect x="20" y="40" width="60" height="40" fill="white" opacity="0.8"/>
+                            <path d="M30 40 L50 20 L70 40" fill="white"/>
+                        </svg>
+                        <h3>DIMENSIÓN<br>Madera</h3>
+                    </div>
+                    <div class="workshop-content">
+                        <div class="workshop-image">
+                            <img src="imagenes/mesa-trabajo-madera.jpg" alt="Taller de madera" loading="lazy">
+                        </div>
+                        <p>Carpintería básica, restauración, y proyectos personalizados. Herramientas reales, proyectos reales.</p>
+                        <span class="workshop-tag">Martes y Jueves</span>
+                    </div>
+                </div>
+
+                <div class="workshop-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="workshop-header" style="background: linear-gradient(135deg, #474747 0%, #2E5266 100%);">
+                        <svg class="workshop-icon" width="40" height="40" viewBox="0 0 100 100">
+                            <rect x="30" y="30" width="40" height="5" fill="white"/>
+                            <rect x="30" y="45" width="40" height="5" fill="white"/>
+                            <rect x="30" y="60" width="40" height="5" fill="white"/>
+                        </svg>
+                        <h3>DIMENSIÓN<br>Herrería</h3>
+                    </div>
+                    <div class="workshop-content">
+                        <div class="workshop-image">
+                            <img src="imagenes/taladro-banco-herramientas.jpg" alt="Taller de herrería" loading="lazy">
+                        </div>
+                        <p>Trabajo con metal, soldadura básica, creación de piezas únicas. La fuerza transformada en arte.</p>
+                        <span class="workshop-tag">Martes y Viernes</span>
+                    </div>
+                </div>
+
+                <div class="workshop-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="workshop-header" style="background: linear-gradient(135deg, #E86D5A 0%, #D55D4A 100%);">
+                        <svg class="workshop-icon" width="40" height="40" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="white" stroke-width="3"/>
+                            <path d="M50 30 Q60 40 50 50 Q40 40 50 30" fill="white"/>
+                        </svg>
+                        <h3>DIMENSIÓN<br>Cerámica</h3>
+                    </div>
+                    <div class="workshop-content">
+                        <p>Modelado, torno, esmaltes. Cada pieza cuenta una historia, cada error es un aprendizaje.</p>
+                        <span class="workshop-tag">Lunes y Miércoles</span>
+                    </div>
+                </div>
+
+                <div class="workshop-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="workshop-header" style="background: linear-gradient(135deg, #A7B7A1 0%, #97A791 100%);">
+                        <svg class="workshop-icon" width="40" height="40" viewBox="0 0 100 100">
+                            <path d="M30 30 L30 70 L70 70 L70 30 Z" fill="none" stroke="white" stroke-width="2"/>
+                            <path d="M30 50 L70 50 M50 30 L50 70" stroke="white" stroke-width="2"/>
+                        </svg>
+                        <h3>DIMENSIÓN<br>Textil</h3>
+                    </div>
+                    <div class="workshop-content">
+                        <p>Bordado, telar, técnicas ancestrales con mirada contemporánea. Ritmo pausado, resultado único.</p>
+                        <span class="workshop-tag">Sábados</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="workshop-cta" data-aos="fade-up">
+                <p>"Si no sabés por dónde empezar, empezá por estar."</p>
+                <a href="#contacto" class="btn btn-primary">Reservar mi lugar</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonios">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                Historias reales, personas reales
+            </h2>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-header">
+                        <div class="avatar" style="background: #E86D5A;">C</div>
+                        <div>
+                            <h4>Carlos, 68 años</h4>
+                            <span>Dimensión Madera</span>
+                        </div>
+                    </div>
+                    <p>
+                        "Después de jubilarme, buscaba algo real, no llenar el tiempo por llenar. 
+                        Acá encontré un lugar donde usar mis manos tiene sentido, donde nadie me 
+                        trata como 'adulto mayor'. Simplemente soy Carlos, haciendo."
+                    </p>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-header">
+                        <div class="avatar" style="background: #2E5266;">M</div>
+                        <div>
+                            <h4>Martín, 42 años</h4>
+                            <span>Dimensión Herrería</span>
+                        </div>
+                    </div>
+                    <p>
+                        "Necesitaba desconectar del trabajo, pero no con ocio pasivo. 
+                        Los martes a la noche, mientras sueno metal, no pienso en mails ni reuniones. 
+                        Es mi pausa activa."
+                    </p>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-header">
+                        <div class="avatar" style="background: #D9A441;">MJ</div>
+                        <div>
+                            <h4>María José, 54 años</h4>
+                            <span>Dimensión Cerámica</span>
+                        </div>
+                    </div>
+                    <p>
+                        "Más que aprender cerámica, recuperé algo de mí misma. 
+                        El grupo del miércoles ya es parte de mi semana. No es obligatorio hablar, 
+                        pero siempre terminamos charlando."
+                    </p>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="testimonial-header">
+                        <div class="avatar" style="background: #A7B7A1;">S</div>
+                        <div>
+                            <h4>Sofía, 33 años</h4>
+                            <span>Dimensión Arte</span>
+                        </div>
+                    </div>
+                    <p>
+                        "Puedo venir sola sin sentirme incómoda. No hay presión por ser 'creativa' 
+                        o mostrar resultados. Es mi momento de pausa real en la semana."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contacto">
+        <div class="cta-background">
+            <img src="imagenes/espacio-taller-general.jpg" alt="Espacio Trinomio" loading="lazy">
+        </div>
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2>Hacés. Pausás. Volvés.<br>Todo está bien.</h2>
+                <p class="cta-text">
+                    No hay que hacer mucho. A veces alcanza con hacer algo.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-white">Agendar visita</a>
+                    <a href="#" class="btn btn-outline">Hacer consulta</a>
+                </div>
+                <p class="cta-note">
+                    "Esto no es terapia. Pero puede hacerte bien igual."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="logo-trinomio.png" alt="Trinomio Logo" class="logo" width="40" height="40">
+                    <span class="brand-text">TRINOMIO</span>
+                </div>
+                <div class="footer-info">
+                    <p>Un espacio donde tus ideas toman forma.</p>
+                    <p>La Plata, Buenos Aires</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Instagram</a>
+                    <a href="#">WhatsApp</a>
+                    <a href="#">Email</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Trinomio. Un lugar que está hecho con sentido.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trinomio - Un espacio para aprender haciendo, compartir sin obligación y estar bien. Talleres de madera, cerámica, arte y más.">
+    <meta name="keywords" content="talleres, artesanía, madera, cerámica, arte, bienestar, creatividad">
+    <meta property="og:title" content="Trinomio - Espacio de talleres creativos">
+    <meta property="og:description" content="Un espacio donde hacer tenga lógica y propósito. Talleres de madera, cerámica, arte y más en La Plata.">
+    <meta property="og:image" content="imagenes/logo-pared-trinomio.jpg">
+    <meta property="og:url" content="https://sefeguz.github.io/trinomio-landing">
+    <meta property="og:type" content="website">
+    <title>Trinomio - Espacio de talleres creativos</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'trinomio-coral': '#E86D5A',
+                        'trinomio-gray': '#474747',
+                        'trinomio-blue': '#2E5266',
+                        'trinomio-light': '#F3E8DC',
+                        'trinomio-mint': '#A7B7A1',
+                        'trinomio-yellow': '#D9A441',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        'display': ['Playfair Display', 'Georgia', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-up': 'fadeUp 0.8s ease-out',
+                        'scale-in': 'scaleIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(232, 109, 90, 0.9) 0%, rgba(46, 82, 102, 0.9) 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #E86D5A 0%, #2E5266 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+        }
+        .blob {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        }
+    </style>
+</head>
+<body class="bg-trinomio-light text-trinomio-gray antialiased">
+
+    <!-- Navigation -->
+    <nav x-data="{ open: false, scrolled: false }" 
+         @scroll.window="scrolled = (window.pageYOffset > 20)"
+         :class="scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'"
+         class="fixed top-0 w-full z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="favicon.svg" alt="Trinomio" class="h-10 w-10">
+                    <span class="font-display font-bold text-2xl text-trinomio-gray">TRINOMIO</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#inicio" class="text-trinomio-gray hover:text-trinomio-coral transition-colors font-medium">Inicio</a>
+                    <a href="#valores" class="text-trinomio-gray hover:text-trinomio-coral transition-colors font-medium">Valores</a>
+                    <a href="#talleres" class="text-trinomio-gray hover:text-trinomio-coral transition-colors font-medium">Talleres</a>
+                    <a href="#testimonios" class="text-trinomio-gray hover:text-trinomio-coral transition-colors font-medium">Experiencias</a>
+                    <a href="#contacto" class="bg-trinomio-coral text-white px-6 py-2.5 rounded-full hover:bg-trinomio-blue transition-all hover:scale-105 font-semibold">
+                        Empezá hoy
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="open = !open" class="lg:hidden p-2">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path x-show="open" x-cloak stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div x-show="open" 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95"
+                 x-cloak
+                 class="lg:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-md rounded-lg mt-2">
+                    <a href="#inicio" @click="open = false" class="block px-3 py-2 text-trinomio-gray hover:text-trinomio-coral transition-colors font-medium">Inicio</a>
+                    <a href="#valores" @click="open = false" class="block px-3 py-2 text-trinomio-gray hover:text-trinomio-coral transition-colors font-medium">Valores</a>
+                    <a href="#talleres" @click="open = false" class="block px-3 py-2 text-trinomio-gray hover:text-trinomio-coral transition-colors font-medium">Talleres</a>
+                    <a href="#testimonios" @click="open = false" class="block px-3 py-2 text-trinomio-gray hover:text-trinomio-coral transition-colors font-medium">Experiencias</a>
+                    <a href="#contacto" @click="open = false" class="block mx-3 mt-2 bg-trinomio-coral text-white px-6 py-2.5 rounded-full text-center font-semibold">
+                        Empezá hoy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="relative min-h-screen flex items-center overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="imagenes/espacio-taller-general.jpg" alt="Espacio Trinomio" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-br from-trinomio-coral/90 via-trinomio-blue/80 to-trinomio-gray/90"></div>
+        </div>
+        
+        <!-- Decorative Blob -->
+        <div class="absolute top-20 right-10 w-96 h-96 bg-trinomio-coral/20 blob animate-float hidden lg:block"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+            <div class="max-w-3xl">
+                <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 animate-fade-up">
+                    <span class="text-trinomio-light">¿Te equivocaste?</span><br>
+                    <span class="text-white/90">Bien. Estás haciendo.</span>
+                </h1>
+                <p class="text-xl sm:text-2xl text-white/90 mb-10 leading-relaxed animate-fade-up" style="animation-delay: 0.2s">
+                    Un espacio donde hacer tenga <span class="font-semibold text-trinomio-light">lógica y propósito</span>. 
+                    Donde aprender haciendo, sin exigencias, con técnica y estética, en comunidad.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 animate-fade-up" style="animation-delay: 0.4s">
+                    <a href="#talleres" class="inline-flex items-center justify-center px-8 py-4 bg-white text-trinomio-coral font-semibold rounded-full hover:bg-trinomio-light transition-all hover:scale-105 shadow-xl">
+                        Explorar talleres
+                        <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                    <a href="#valores" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-trinomio-coral transition-all">
+                        Conocer más
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="valores" class="py-20 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl sm:text-5xl font-bold text-trinomio-gray mb-6">
+                    No se trata de hacerlo perfecto.
+                </h2>
+                <p class="text-2xl text-trinomio-coral font-semibold">Se trata de hacerlo tuyo.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Value Card 1 -->
+                <div class="group hover-lift">
+                    <div class="bg-gradient-to-br from-trinomio-coral/10 to-trinomio-coral/5 rounded-2xl p-8 h-full">
+                        <div class="w-16 h-16 bg-trinomio-coral/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8 text-trinomio-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-trinomio-gray mb-3">Bienestar</h3>
+                        <p class="text-trinomio-gray/80 leading-relaxed">
+                            Un momento para estar, hacer, crear y compartir con otros.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Value Card 2 -->
+                <div class="group hover-lift">
+                    <div class="bg-gradient-to-br from-trinomio-blue/10 to-trinomio-blue/5 rounded-2xl p-8 h-full">
+                        <div class="w-16 h-16 bg-trinomio-blue/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8 text-trinomio-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-trinomio-gray mb-3">Creatividad</h3>
+                        <p class="text-trinomio-gray/80 leading-relaxed">
+                            Explorar sin miedo, con método pero sin rigidez.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Value Card 3 -->
+                <div class="group hover-lift">
+                    <div class="bg-gradient-to-br from-trinomio-yellow/10 to-trinomio-yellow/5 rounded-2xl p-8 h-full">
+                        <div class="w-16 h-16 bg-trinomio-yellow/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8 text-trinomio-yellow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-trinomio-gray mb-3">Pausa</h3>
+                        <p class="text-trinomio-gray/80 leading-relaxed">
+                            Desconectar para volver a conectar con lo esencial.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Value Card 4 -->
+                <div class="group hover-lift">
+                    <div class="bg-gradient-to-br from-trinomio-mint/10 to-trinomio-mint/5 rounded-2xl p-8 h-full">
+                        <div class="w-16 h-16 bg-trinomio-mint/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8 text-trinomio-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-trinomio-gray mb-3">Comunidad</h3>
+                        <p class="text-trinomio-gray/80 leading-relaxed">
+                            Compartir sin obligación, estar sin necesidad de explicarlo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proposition Section -->
+    <section class="py-20 lg:py-32 bg-gradient-to-br from-trinomio-light via-white to-trinomio-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1">
+                    <h2 class="font-display text-4xl sm:text-5xl font-bold text-trinomio-gray mb-6">
+                        Cultura del hacer sin presión
+                    </h2>
+                    <p class="text-lg text-trinomio-gray/80 mb-6 leading-relaxed">
+                        En la mayoría de los talleres similares, el foco está puesto en aprender una técnica, 
+                        terminar un producto o adquirir una habilidad específica.
+                    </p>
+                    <p class="text-lg text-trinomio-gray mb-8 leading-relaxed">
+                        En este espacio, el foco está en cómo lo vivís mientras lo hacés. 
+                        <span class="font-semibold text-trinomio-coral">El resultado no es la prioridad. El proceso es el valor.</span>
+                    </p>
+                    <blockquote class="border-l-4 border-trinomio-coral pl-6 py-4 bg-white/50 rounded-r-lg">
+                        <p class="text-xl italic text-trinomio-gray">
+                            "No prometemos transformar tu vida. Pero capaz sí tu semana. Y a veces, eso alcanza."
+                        </p>
+                    </blockquote>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <div class="relative">
+                        <img src="imagenes/mesa-trabajo-madera.jpg" alt="Mesa de trabajo" 
+                             class="rounded-2xl shadow-2xl w-full hover:scale-105 transition-transform duration-500">
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-trinomio-coral/20 blob -z-10"></div>
+                        <div class="absolute -top-6 -left-6 w-32 h-32 bg-trinomio-blue/20 blob -z-10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workshops Section -->
+    <section id="talleres" class="py-20 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl sm:text-5xl font-bold text-trinomio-gray mb-6">
+                    Las dimensiones del hacer
+                </h2>
+                <p class="text-xl text-trinomio-gray/80 max-w-3xl mx-auto">
+                    No hay una única forma de habitar el hacer. Por eso usamos la idea de dimensiones 
+                    para organizar lo que pasa en el espacio.
+                </p>
+            </div>
+            
+            <!-- Workshop Tabs -->
+            <div x-data="{ activeTab: 'madera' }" class="space-y-8">
+                <!-- Tab Navigation -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button @click="activeTab = 'madera'" 
+                            :class="activeTab === 'madera' ? 'bg-trinomio-coral text-white' : 'bg-trinomio-light text-trinomio-gray'"
+                            class="px-6 py-3 rounded-full font-semibold transition-all hover:scale-105">
+                        Madera
+                    </button>
+                    <button @click="activeTab = 'herreria'" 
+                            :class="activeTab === 'herreria' ? 'bg-trinomio-gray text-white' : 'bg-trinomio-light text-trinomio-gray'"
+                            class="px-6 py-3 rounded-full font-semibold transition-all hover:scale-105">
+                        Herrería
+                    </button>
+                    <button @click="activeTab = 'ceramica'" 
+                            :class="activeTab === 'ceramica' ? 'bg-trinomio-blue text-white' : 'bg-trinomio-light text-trinomio-gray'"
+                            class="px-6 py-3 rounded-full font-semibold transition-all hover:scale-105">
+                        Cerámica
+                    </button>
+                    <button @click="activeTab = 'textil'" 
+                            :class="activeTab === 'textil' ? 'bg-trinomio-mint text-white' : 'bg-trinomio-light text-trinomio-gray'"
+                            class="px-6 py-3 rounded-full font-semibold transition-all hover:scale-105">
+                        Textil
+                    </button>
+                </div>
+                
+                <!-- Tab Content -->
+                <div class="relative">
+                    <!-- Madera Workshop -->
+                    <div x-show="activeTab === 'madera'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform scale-95"
+                         x-transition:enter-end="opacity-100 transform scale-100"
+                         class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="font-display text-3xl font-bold text-trinomio-gray mb-4">
+                                DIMENSIÓN Madera
+                            </h3>
+                            <p class="text-lg text-trinomio-gray/80 mb-6">
+                                Carpintería básica, restauración, y proyectos personalizados. 
+                                Herramientas reales, proyectos reales.
+                            </p>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Martes y Jueves - 18:00 a 21:00</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Máximo 8 personas por grupo</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Todos los materiales incluidos</span>
+                                </div>
+                            </div>
+                            <button class="mt-8 bg-trinomio-coral text-white px-8 py-3 rounded-full font-semibold hover:bg-trinomio-blue transition-all hover:scale-105">
+                                Reservar mi lugar
+                            </button>
+                        </div>
+                        <div>
+                            <img src="imagenes/mesa-trabajo-madera.jpg" alt="Taller de madera" 
+                                 class="rounded-2xl shadow-xl w-full">
+                        </div>
+                    </div>
+                    
+                    <!-- Herrería Workshop -->
+                    <div x-show="activeTab === 'herreria'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform scale-95"
+                         x-transition:enter-end="opacity-100 transform scale-100"
+                         class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="font-display text-3xl font-bold text-trinomio-gray mb-4">
+                                DIMENSIÓN Herrería
+                            </h3>
+                            <p class="text-lg text-trinomio-gray/80 mb-6">
+                                Trabajo con metal, soldadura básica, creación de piezas únicas. 
+                                La fuerza transformada en arte.
+                            </p>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Martes y Viernes - 18:00 a 21:00</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Máximo 6 personas por grupo</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Equipamiento de seguridad provisto</span>
+                                </div>
+                            </div>
+                            <button class="mt-8 bg-trinomio-gray text-white px-8 py-3 rounded-full font-semibold hover:bg-trinomio-blue transition-all hover:scale-105">
+                                Reservar mi lugar
+                            </button>
+                        </div>
+                        <div>
+                            <img src="imagenes/taladro-banco-herramientas.jpg" alt="Taller de herrería" 
+                                 class="rounded-2xl shadow-xl w-full">
+                        </div>
+                    </div>
+                    
+                    <!-- Cerámica Workshop -->
+                    <div x-show="activeTab === 'ceramica'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform scale-95"
+                         x-transition:enter-end="opacity-100 transform scale-100"
+                         class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="font-display text-3xl font-bold text-trinomio-gray mb-4">
+                                DIMENSIÓN Cerámica
+                            </h3>
+                            <p class="text-lg text-trinomio-gray/80 mb-6">
+                                Modelado, torno, esmaltes. Cada pieza cuenta una historia, 
+                                cada error es un aprendizaje.
+                            </p>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Lunes y Miércoles - 18:00 a 21:00</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Máximo 10 personas por grupo</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Arcilla y horneado incluidos</span>
+                                </div>
+                            </div>
+                            <button class="mt-8 bg-trinomio-blue text-white px-8 py-3 rounded-full font-semibold hover:bg-trinomio-coral transition-all hover:scale-105">
+                                Reservar mi lugar
+                            </button>
+                        </div>
+                        <div>
+                            <img src="imagenes/espacio-taller-general.jpg" alt="Taller de cerámica" 
+                                 class="rounded-2xl shadow-xl w-full">
+                        </div>
+                    </div>
+                    
+                    <!-- Textil Workshop -->
+                    <div x-show="activeTab === 'textil'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform scale-95"
+                         x-transition:enter-end="opacity-100 transform scale-100"
+                         class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="font-display text-3xl font-bold text-trinomio-gray mb-4">
+                                DIMENSIÓN Textil
+                            </h3>
+                            <p class="text-lg text-trinomio-gray/80 mb-6">
+                                Bordado, telar, técnicas ancestrales con mirada contemporánea. 
+                                Ritmo pausado, resultado único.
+                            </p>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Sábados - 10:00 a 13:00</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Máximo 8 personas por grupo</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-trinomio-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="text-trinomio-gray">Materiales básicos incluidos</span>
+                                </div>
+                            </div>
+                            <button class="mt-8 bg-trinomio-mint text-white px-8 py-3 rounded-full font-semibold hover:bg-trinomio-coral transition-all hover:scale-105">
+                                Reservar mi lugar
+                            </button>
+                        </div>
+                        <div>
+                            <img src="imagenes/logo-herramientas-vintage.jpg" alt="Taller textil" 
+                                 class="rounded-2xl shadow-xl w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <p class="text-2xl font-display italic text-trinomio-gray mb-6">
+                    "Si no sabés por dónde empezar, empezá por estar."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonios" class="py-20 lg:py-32 bg-gradient-to-br from-trinomio-light to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl sm:text-5xl font-bold text-trinomio-gray mb-6">
+                    Historias reales, personas reales
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover-lift">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-trinomio-coral rounded-full flex items-center justify-center text-white font-bold text-xl">
+                            C
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-trinomio-gray">Carlos, 68 años</h4>
+                            <p class="text-sm text-trinomio-gray/60">Dimensión Madera</p>
+                        </div>
+                    </div>
+                    <p class="text-trinomio-gray/80 italic leading-relaxed">
+                        "Después de jubilarme, buscaba algo real, no llenar el tiempo por llenar. 
+                        Acá encontré un lugar donde usar mis manos tiene sentido."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover-lift">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-trinomio-blue rounded-full flex items-center justify-center text-white font-bold text-xl">
+                            M
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-trinomio-gray">Martín, 42 años</h4>
+                            <p class="text-sm text-trinomio-gray/60">Dimensión Herrería</p>
+                        </div>
+                    </div>
+                    <p class="text-trinomio-gray/80 italic leading-relaxed">
+                        "Necesitaba desconectar del trabajo, pero no con ocio pasivo. 
+                        Los martes a la noche, mientras sueno metal, no pienso en mails."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover-lift">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-trinomio-yellow rounded-full flex items-center justify-center text-white font-bold text-xl">
+                            MJ
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-trinomio-gray">María José, 54</h4>
+                            <p class="text-sm text-trinomio-gray/60">Dimensión Cerámica</p>
+                        </div>
+                    </div>
+                    <p class="text-trinomio-gray/80 italic leading-relaxed">
+                        "Más que aprender cerámica, recuperé algo de mí misma. 
+                        El grupo del miércoles ya es parte de mi semana."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 4 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover-lift">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-trinomio-mint rounded-full flex items-center justify-center text-white font-bold text-xl">
+                            S
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-trinomio-gray">Sofía, 33 años</h4>
+                            <p class="text-sm text-trinomio-gray/60">Dimensión Arte</p>
+                        </div>
+                    </div>
+                    <p class="text-trinomio-gray/80 italic leading-relaxed">
+                        "Puedo venir sola sin sentirme incómoda. No hay presión por ser 'creativa'. 
+                        Es mi momento de pausa real en la semana."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contacto" class="relative py-20 lg:py-32 overflow-hidden">
+        <!-- Background with overlay -->
+        <div class="absolute inset-0">
+            <img src="imagenes/espacio-taller-general.jpg" alt="Espacio Trinomio" class="w-full h-full object-cover">
+            <div class="absolute inset-0 gradient-overlay"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+                Hacés. Pausás. Volvés.<br>
+                Todo está bien.
+            </h2>
+            <p class="text-2xl text-white/90 mb-10">
+                No hay que hacer mucho. A veces alcanza con hacer algo.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#" class="inline-flex items-center justify-center px-8 py-4 bg-white text-trinomio-coral font-semibold rounded-full hover:bg-trinomio-light transition-all hover:scale-105 shadow-xl">
+                    Agendar visita
+                </a>
+                <a href="#" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-trinomio-coral transition-all">
+                    Hacer consulta
+                </a>
+            </div>
+            <p class="mt-12 text-xl italic text-white/80">
+                "Esto no es terapia. Pero puede hacerte bien igual."
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-trinomio-gray text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="favicon.svg" alt="Trinomio" class="h-10 w-10">
+                        <span class="font-display font-bold text-2xl">TRINOMIO</span>
+                    </div>
+                    <p class="text-white/80">
+                        Un espacio donde tus ideas toman forma.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">Ubicación</h3>
+                    <p class="text-white/80">
+                        La Plata, Buenos Aires<br>
+                        Argentina
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">Contacto</h3>
+                    <div class="space-y-2">
+                        <a href="#" class="text-white/80 hover:text-white transition-colors block">Instagram</a>
+                        <a href="#" class="text-white/80 hover:text-white transition-colors block">WhatsApp</a>
+                        <a href="#" class="text-white/80 hover:text-white transition-colors block">Email</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 mt-12 pt-8 text-center">
+                <p class="text-white/60">
+                    © 2024 Trinomio. Un lugar que está hecho con sentido.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Scripts for Alpine.js initialization -->
+    <script>
+        // Initialize Alpine components if needed
+        document.addEventListener('alpine:init', () => {
+            // Any Alpine.js store or component initialization
+        });
+    </script>
+</body>
+</html>

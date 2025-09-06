@@ -1,361 +1,580 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Trinomio - Un espacio para aprender haciendo, compartir sin obligación y estar bien. Talleres de madera, cerámica, arte y más.">
-    <meta name="keywords" content="talleres, artesanía, madera, cerámica, arte, bienestar, creatividad">
-    <meta property="og:title" content="Trinomio - Espacio de talleres creativos">
-    <meta property="og:description" content="Un espacio donde hacer tenga lógica y propósito. Talleres de madera, cerámica, arte y más en La Plata.">
-    <meta property="og:image" content="imagenes/logo-pared-trinomio.jpg">
-    <meta property="og:url" content="https://sefeguz.github.io/trinomio-landing">
-    <meta property="og:type" content="website">
-    <title>Trinomio - Espacio de talleres creativos</title>
+    <title>Trinomio - Un espacio donde tus ideas toman forma</title>
+    <meta name="description" content="Espacio de talleres creativos y artesanales en La Plata. Madera, metal, cerámica, textil y arte. El proceso es el valor.">
     
-    <!-- Favicons -->
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="apple-touch-icon" href="favicon.svg">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo-trinomio.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Image Enhancement Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in effect to images when they load
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('fade-in');
+                } else {
+                    img.addEventListener('load', () => {
+                        img.classList.add('fade-in');
+                    });
+                }
+            });
+        });
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'coral': '#E86D5A',
+                        'azul-profundo': '#2E5266',
+                        'gris-carbon': '#474747',
+                        'verde-menta': '#52B788',
+                        'amarillo-ocre': '#F4A261',
+                        'purpura': '#9D4EDD',
+                        'blanco-hueso': '#FAF9F6',
+                        'gris-claro': '#E5E5E5'
+                    },
+                    fontFamily: {
+                        'sans': ['Lato', 'sans-serif'],
+                        'display': ['Lato', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delay': 'float 6s ease-in-out 2s infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom styles for organic shapes */
+        .organic-shape {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+        .organic-shape-2 {
+            border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+        }
+        .organic-shape-3 {
+            border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+        }
+        /* Smooth scroll for all browsers */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Custom gradient overlay */
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(232, 109, 90, 0.1) 0%, rgba(46, 82, 102, 0.1) 100%);
+        }
+        /* Hero background image */
+        .hero-bg {
+            background-image: linear-gradient(rgba(250, 249, 246, 0.8), rgba(250, 249, 246, 0.8)), url('imagenes/espacio-taller-general.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        /* Lazy loading optimization - images visible by default */
+        img {
+            transition: opacity 0.3s ease-in-out;
+        }
+        img.fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0.8; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <img src="logo-trinomio.png" alt="Trinomio Logo" class="logo" width="40" height="40">
-                <span class="brand-text">TRINOMIO</span>
+<body class="bg-blanco-hueso text-gris-carbon" x-data="{ mobileMenu: false, activeTab: 'todos' }">
+    
+    <!-- Header -->
+    <header class="fixed top-0 w-full bg-blanco-hueso/95 backdrop-blur-sm z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#inicio" class="flex items-center space-x-3">
+                    <img src="logo-trinomio.png" alt="Trinomio" class="w-12 h-12 object-contain">
+                    <span class="text-2xl font-black text-gris-carbon">TRINOMIO</span>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#filosofia" class="text-gris-carbon hover:text-coral transition-colors">Filosofía</a>
+                    <a href="#talleres" class="text-gris-carbon hover:text-coral transition-colors">Talleres</a>
+                    <a href="#espacio" class="text-gris-carbon hover:text-coral transition-colors">El Espacio</a>
+                    <a href="#contacto" class="text-gris-carbon hover:text-coral transition-colors">Contacto</a>
+                    <a href="https://taplink.cc/trinomiocb" target="_blank" class="bg-coral text-white px-6 py-2 rounded-full hover:bg-opacity-90 transition-all hover:shadow-lg">
+                        Inscribirse
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path x-show="mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
-            <button class="nav-toggle" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#valores">Valores</a></li>
-                <li><a href="#talleres">Talleres</a></li>
-                <li><a href="#testimonios">Experiencias</a></li>
-                <li><a href="#contacto" class="btn-nav">Empezá hoy</a></li>
-            </ul>
-        </div>
-    </nav>
-
+            
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenu" x-transition class="md:hidden mt-4 pb-4">
+                <a href="#filosofia" class="block py-2 text-gris-carbon hover:text-coral transition-colors">Filosofía</a>
+                <a href="#talleres" class="block py-2 text-gris-carbon hover:text-coral transition-colors">Talleres</a>
+                <a href="#espacio" class="block py-2 text-gris-carbon hover:text-coral transition-colors">El Espacio</a>
+                <a href="#contacto" class="block py-2 text-gris-carbon hover:text-coral transition-colors">Contacto</a>
+                <a href="https://taplink.cc/trinomiocb" target="_blank" class="block mt-4 bg-coral text-white px-6 py-2 rounded-full text-center hover:bg-opacity-90 transition-all">
+                    Inscribirse
+                </a>
+            </div>
+        </nav>
+    </header>
+    
     <!-- Hero Section -->
-    <section class="hero" id="inicio">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title" data-aos="fade-up">
-                    <span class="highlight">¿Te equivocaste?</span><br>
-                    Bien. Estás haciendo.
+    <section id="inicio" class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden hero-bg">
+        <!-- Background Shapes -->
+        <div class="absolute top-20 left-10 w-64 h-64 bg-coral/10 rounded-full organic-shape animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-80 h-80 bg-azul-profundo/10 rounded-full organic-shape-2 animate-float-delay"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-verde-menta/5 rounded-full organic-shape-3 animate-float-slow"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+                    Un espacio donde<br>
+                    <span class="text-coral">tus ideas</span> toman <span class="text-azul-profundo">forma</span>
                 </h1>
-                <p class="hero-text" data-aos="fade-up" data-aos-delay="100">
-                    Un espacio donde hacer tenga lógica y propósito. Donde aprender 
-                    haciendo, sin exigencias, con técnica y estética, en comunidad.
+                <p class="text-xl md:text-2xl mb-8 text-gray-600 font-light">
+                    ¿Te equivocaste? Bien. Estás haciendo.
                 </p>
-                <div class="hero-buttons" data-aos="fade-up" data-aos-delay="200">
-                    <a href="#talleres" class="btn btn-primary">Explorar talleres</a>
-                    <a href="#valores" class="btn btn-secondary">Conocer más</a>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <img src="imagenes/logo-pared-trinomio.jpg" alt="Espacio Trinomio" class="hero-image" loading="lazy">
-                <div class="organic-shape"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Values Section -->
-    <section class="values" id="valores">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">
-                No se trata de hacerlo perfecto.<br>
-                <span class="highlight">Se trata de hacerlo tuyo.</span>
-            </h2>
-            <div class="values-grid">
-                <div class="value-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="value-icon">
-                        <svg width="60" height="60" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="40" fill="#E86D5A" opacity="0.2"/>
-                            <path d="M50 30 L50 70 M30 50 L70 50" stroke="#E86D5A" stroke-width="3"/>
-                        </svg>
-                    </div>
-                    <h3>Bienestar</h3>
-                    <p>Un momento para estar, hacer, crear y compartir con otros.</p>
-                </div>
-                <div class="value-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="value-icon">
-                        <svg width="60" height="60" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="40" fill="#2E5266" opacity="0.2"/>
-                            <path d="M30 50 Q50 30 70 50 Q50 70 30 50" fill="#2E5266"/>
-                        </svg>
-                    </div>
-                    <h3>Creatividad</h3>
-                    <p>Explorar sin miedo, con método pero sin rigidez.</p>
-                </div>
-                <div class="value-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="value-icon">
-                        <svg width="60" height="60" viewBox="0 0 100 100">
-                            <rect x="30" y="30" width="40" height="40" fill="#D9A441" opacity="0.2"/>
-                            <circle cx="50" cy="50" r="15" fill="#D9A441"/>
-                        </svg>
-                    </div>
-                    <h3>Pausa</h3>
-                    <p>Desconectar para volver a conectar con lo esencial.</p>
-                </div>
-                <div class="value-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="value-icon">
-                        <svg width="60" height="60" viewBox="0 0 100 100">
-                            <circle cx="35" cy="50" r="20" fill="#A7B7A1" opacity="0.3"/>
-                            <circle cx="65" cy="50" r="20" fill="#A7B7A1" opacity="0.3"/>
-                            <circle cx="50" cy="50" r="20" fill="#A7B7A1" opacity="0.5"/>
-                        </svg>
-                    </div>
-                    <h3>Comunidad</h3>
-                    <p>Compartir sin obligación, estar sin necesidad de explicarlo.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#talleres" class="bg-coral text-white px-8 py-4 rounded-full text-lg hover:bg-opacity-90 transition-all hover:shadow-xl">
+                        Explorar Talleres
+                    </a>
+                    <a href="#filosofia" class="border-2 border-azul-profundo text-azul-profundo px-8 py-4 rounded-full text-lg hover:bg-azul-profundo hover:text-white transition-all">
+                        Conocer Más
+                    </a>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Proposition Section -->
-    <section class="proposition">
-        <div class="container">
-            <div class="prop-content">
-                <div class="prop-text" data-aos="fade-right">
-                    <h2>Cultura del hacer sin presión</h2>
-                    <p class="lead">
-                        En la mayoría de los talleres similares, el foco está puesto en aprender 
-                        una técnica, terminar un producto o adquirir una habilidad específica.
-                    </p>
-                    <p>
-                        En este espacio, el foco está en cómo lo vivís mientras lo hacés. 
-                        <strong>El resultado no es la prioridad. El proceso es el valor.</strong>
-                    </p>
-                    <blockquote>
-                        "No prometemos transformar tu vida. Pero capaz sí tu semana. 
-                        Y a veces, eso alcanza."
-                    </blockquote>
-                </div>
-                <div class="prop-visual" data-aos="fade-left">
-                    <img src="imagenes/mesa-trabajo-madera.jpg" alt="Mesa de trabajo en Trinomio" class="prop-image" loading="lazy">
-                    <div class="organic-frame"></div>
-                </div>
+    
+    <!-- Filosofía Section -->
+    <section id="filosofia" class="py-20 bg-gradient-to-br from-blanco-hueso to-gris-claro/20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black mb-4">El proceso es el valor</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    No prometemos transformar tu vida. Pero capaz sí tu semana.
+                </p>
             </div>
-        </div>
-    </section>
-
-    <!-- Workshops Section -->
-    <section class="workshops" id="talleres">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">
-                Las dimensiones del hacer
-            </h2>
-            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
-                No hay una única forma de habitar el hacer. Por eso usamos la idea de 
-                dimensiones para organizar lo que pasa en el espacio.
-            </p>
             
-            <div class="workshop-grid">
-                <div class="workshop-card" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="workshop-header" style="background: linear-gradient(135deg, #8B6F47 0%, #6B5637 100%);">
-                        <svg class="workshop-icon" width="40" height="40" viewBox="0 0 100 100">
-                            <rect x="20" y="40" width="60" height="40" fill="white" opacity="0.8"/>
-                            <path d="M30 40 L50 20 L70 40" fill="white"/>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Crear -->
+                <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-20 h-20 bg-coral/20 rounded-full organic-shape flex items-center justify-center mb-6">
+                        <svg class="w-10 h-10 text-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
                         </svg>
-                        <h3>DIMENSIÓN<br>Madera</h3>
                     </div>
-                    <div class="workshop-content">
-                        <div class="workshop-image">
-                            <img src="imagenes/mesa-trabajo-madera.jpg" alt="Taller de madera" loading="lazy">
-                        </div>
-                        <p>Carpintería básica, restauración, y proyectos personalizados. Herramientas reales, proyectos reales.</p>
-                        <span class="workshop-tag">Martes y Jueves</span>
-                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Crear</h3>
+                    <p class="text-gray-600">
+                        Expresate a través del hacer. Sin presiones, sin exigencias. Tu ritmo, tu proceso.
+                    </p>
                 </div>
-
-                <div class="workshop-card" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="workshop-header" style="background: linear-gradient(135deg, #474747 0%, #2E5266 100%);">
-                        <svg class="workshop-icon" width="40" height="40" viewBox="0 0 100 100">
-                            <rect x="30" y="30" width="40" height="5" fill="white"/>
-                            <rect x="30" y="45" width="40" height="5" fill="white"/>
-                            <rect x="30" y="60" width="40" height="5" fill="white"/>
+                
+                <!-- Pausar -->
+                <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-20 h-20 bg-azul-profundo/20 rounded-full organic-shape-2 flex items-center justify-center mb-6">
+                        <svg class="w-10 h-10 text-azul-profundo" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                         </svg>
-                        <h3>DIMENSIÓN<br>Herrería</h3>
                     </div>
-                    <div class="workshop-content">
-                        <div class="workshop-image">
-                            <img src="imagenes/taladro-banco-herramientas.jpg" alt="Taller de herrería" loading="lazy">
-                        </div>
-                        <p>Trabajo con metal, soldadura básica, creación de piezas únicas. La fuerza transformada en arte.</p>
-                        <span class="workshop-tag">Martes y Viernes</span>
-                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Pausar</h3>
+                    <p class="text-gray-600">
+                        Desconectar para volver a conectar. Un respiro activo en tu rutina.
+                    </p>
                 </div>
-
-                <div class="workshop-card" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="workshop-header" style="background: linear-gradient(135deg, #E86D5A 0%, #D55D4A 100%);">
-                        <svg class="workshop-icon" width="40" height="40" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="30" fill="none" stroke="white" stroke-width="3"/>
-                            <path d="M50 30 Q60 40 50 50 Q40 40 50 30" fill="white"/>
+                
+                <!-- Compartir -->
+                <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-20 h-20 bg-verde-menta/20 rounded-full organic-shape-3 flex items-center justify-center mb-6">
+                        <svg class="w-10 h-10 text-verde-menta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
-                        <h3>DIMENSIÓN<br>Cerámica</h3>
                     </div>
-                    <div class="workshop-content">
-                        <p>Modelado, torno, esmaltes. Cada pieza cuenta una historia, cada error es un aprendizaje.</p>
-                        <span class="workshop-tag">Lunes y Miércoles</span>
-                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Compartir</h3>
+                    <p class="text-gray-600">
+                        Conectá con otros sin obligación. La comunidad surge naturalmente.
+                    </p>
                 </div>
-
-                <div class="workshop-card" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="workshop-header" style="background: linear-gradient(135deg, #A7B7A1 0%, #97A791 100%);">
-                        <svg class="workshop-icon" width="40" height="40" viewBox="0 0 100 100">
-                            <path d="M30 30 L30 70 L70 70 L70 30 Z" fill="none" stroke="white" stroke-width="2"/>
-                            <path d="M30 50 L70 50 M50 30 L50 70" stroke="white" stroke-width="2"/>
-                        </svg>
-                        <h3>DIMENSIÓN<br>Textil</h3>
-                    </div>
-                    <div class="workshop-content">
-                        <p>Bordado, telar, técnicas ancestrales con mirada contemporánea. Ritmo pausado, resultado único.</p>
-                        <span class="workshop-tag">Sábados</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="workshop-cta" data-aos="fade-up">
-                <p>"Si no sabés por dónde empezar, empezá por estar."</p>
-                <a href="#contacto" class="btn btn-primary">Reservar mi lugar</a>
             </div>
         </div>
     </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonios">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">
-                Historias reales, personas reales
-            </h2>
+    
+    <!-- Talleres Section -->
+    <section id="talleres" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black mb-4">Nuestras Dimensiones</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Cinco espacios, infinitas posibilidades de expresión
+                </p>
+            </div>
             
-            <div class="testimonials-grid">
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="testimonial-header">
-                        <div class="avatar" style="background: #E86D5A;">C</div>
-                        <div>
-                            <h4>Carlos, 68 años</h4>
-                            <span>Dimensión Madera</span>
+            <!-- Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-12">
+                <button @click="activeTab = 'todos'" :class="activeTab === 'todos' ? 'bg-coral text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full transition-all">
+                    Todos
+                </button>
+                <button @click="activeTab = 'carpinteria'" :class="activeTab === 'carpinteria' ? 'bg-coral text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full transition-all">
+                    Carpintería
+                </button>
+                <button @click="activeTab = 'restauracion'" :class="activeTab === 'restauracion' ? 'bg-coral text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full transition-all">
+                    Restauración
+                </button>
+                <button @click="activeTab = 'modelado'" :class="activeTab === 'modelado' ? 'bg-coral text-white' : 'bg-gray-200 text-gray-700'" class="px-6 py-2 rounded-full transition-all">
+                    Modelado
+                </button>
+            </div>
+            
+            <!-- Talleres Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Taller de Carpintería -->
+                <div x-show="activeTab === 'todos' || activeTab === 'carpinteria'" x-transition class="group">
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
+                        <div class="h-48 relative overflow-hidden">
+                            <img src="imagenes/mesa-trabajo-madera.jpg" alt="Mesa de trabajo de madera" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                            <div class="absolute top-4 right-4 bg-coral text-white px-3 py-1 rounded-full text-sm font-bold">
+                                Jueves 18hs
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Carpintería</h3>
+                            <div class="text-gray-600 space-y-2 mb-4">
+                                <p class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>8 clases - 2 horas c/u</p>
+                                <p class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>Comienza: Jueves 18:00</p>
+                                <p class="text-2xl font-bold text-coral mt-3">$250.000</p>
+                            </div>
+                            <a href="https://wa.me/542213627269?text=Hola!%20Quiero%20info%20sobre%20el%20taller%20de%20Carpinter%C3%ADa" target="_blank" class="block text-center bg-coral text-white px-4 py-2 rounded-full hover:bg-coral/90 transition-all">
+                                Inscribirme
+                            </a>
                         </div>
                     </div>
-                    <p>
-                        "Después de jubilarme, buscaba algo real, no llenar el tiempo por llenar. 
-                        Acá encontré un lugar donde usar mis manos tiene sentido, donde nadie me 
-                        trata como 'adulto mayor'. Simplemente soy Carlos, haciendo."
-                    </p>
                 </div>
-
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="testimonial-header">
-                        <div class="avatar" style="background: #2E5266;">M</div>
-                        <div>
-                            <h4>Martín, 42 años</h4>
-                            <span>Dimensión Herrería</span>
+                
+                <!-- Taller de Restauración -->
+                <div x-show="activeTab === 'todos' || activeTab === 'restauracion'" x-transition class="group">
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
+                        <div class="h-48 relative overflow-hidden">
+                            <img src="imagenes/taladro-banco-herramientas.jpg" alt="Taladro de banco y herramientas" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                            <div class="absolute top-4 right-4 bg-coral text-white px-3 py-1 rounded-full text-sm font-bold">
+                                Lunes 18hs
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Restauración</h3>
+                            <div class="text-gray-600 space-y-2 mb-4">
+                                <p class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>4 clases - 2 horas c/u</p>
+                                <p class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>Comienza: Lunes 18:00</p>
+                                <p class="text-2xl font-bold text-coral mt-3">$120.000</p>
+                            </div>
+                            <a href="https://wa.me/542213627269?text=Hola!%20Quiero%20info%20sobre%20el%20taller%20de%20Restauraci%C3%B3n" target="_blank" class="block text-center bg-coral text-white px-4 py-2 rounded-full hover:bg-coral/90 transition-all">
+                                Inscribirme
+                            </a>
                         </div>
                     </div>
-                    <p>
-                        "Necesitaba desconectar del trabajo, pero no con ocio pasivo. 
-                        Los martes a la noche, mientras sueno metal, no pienso en mails ni reuniones. 
-                        Es mi pausa activa."
-                    </p>
                 </div>
-
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="testimonial-header">
-                        <div class="avatar" style="background: #D9A441;">MJ</div>
-                        <div>
-                            <h4>María José, 54 años</h4>
-                            <span>Dimensión Cerámica</span>
+                
+                <!-- Taller de Modelado Adultos -->
+                <div x-show="activeTab === 'todos' || activeTab === 'modelado'" x-transition class="group">
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
+                        <div class="h-48 relative overflow-hidden">
+                            <img src="imagenes/detalle-herramientas-1.jpg" alt="Herramientas de cerámica y escultura" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                            <div class="absolute top-4 right-4 bg-coral text-white px-3 py-1 rounded-full text-sm font-bold">
+                                Martes 18hs
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Modelado Adultos</h3>
+                            <div class="text-gray-600 space-y-2 mb-4">
+                                <p class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>5 clases - 2.5 horas c/u</p>
+                                <p class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>Comienza: Martes 18:00</p>
+                                <p class="text-2xl font-bold text-coral mt-3">$100.000</p>
+                            </div>
+                            <a href="https://wa.me/542213627269?text=Hola!%20Quiero%20info%20sobre%20el%20taller%20de%20Modelado%20Adultos" target="_blank" class="block text-center bg-coral text-white px-4 py-2 rounded-full hover:bg-coral/90 transition-all">
+                                Inscribirme
+                            </a>
                         </div>
                     </div>
-                    <p>
-                        "Más que aprender cerámica, recuperé algo de mí misma. 
-                        El grupo del miércoles ya es parte de mi semana. No es obligatorio hablar, 
-                        pero siempre terminamos charlando."
-                    </p>
                 </div>
-
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="testimonial-header">
-                        <div class="avatar" style="background: #A7B7A1;">S</div>
-                        <div>
-                            <h4>Sofía, 33 años</h4>
-                            <span>Dimensión Arte</span>
+                
+                <!-- Taller de Modelado Niños/Jóvenes -->
+                <div x-show="activeTab === 'todos' || activeTab === 'modelado'" x-transition class="group">
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
+                        <div class="h-48 relative overflow-hidden">
+                            <img src="imagenes/detalle-herramientas-2.jpg" alt="Herramientas textiles y creativas" class="w-full h-full object-cover" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                            <div class="absolute top-4 right-4 bg-verde-menta text-white px-3 py-1 rounded-full text-sm font-bold">
+                                Miércoles 18hs
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Modelado Niños/Jóvenes</h3>
+                            <div class="text-gray-600 space-y-2 mb-4">
+                                <p class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>5 clases - 2 horas c/u</p>
+                                <p class="flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>Comienza: Miércoles 18:00</p>
+                                <p class="text-2xl font-bold text-verde-menta mt-3">$100.000</p>
+                            </div>
+                            <a href="https://wa.me/542213627269?text=Hola!%20Quiero%20info%20sobre%20el%20taller%20de%20Modelado%20para%20ni%C3%B1os" target="_blank" class="block text-center bg-verde-menta text-white px-4 py-2 rounded-full hover:bg-verde-menta/90 transition-all">
+                                Inscribirme
+                            </a>
                         </div>
                     </div>
-                    <p>
-                        "Puedo venir sola sin sentirme incómoda. No hay presión por ser 'creativa' 
-                        o mostrar resultados. Es mi momento de pausa real en la semana."
-                    </p>
+                </div>
+                
+                <!-- Próximos Talleres -->
+                <div x-show="activeTab === 'todos'" x-transition class="group">
+                    <div class="bg-gradient-to-br from-purpura/10 to-purpura/5 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
+                        <div class="h-48 relative overflow-hidden flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-20 h-20 text-purpura mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <p class="text-purpura font-bold">Nuevos talleres</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-2">Próximamente</h3>
+                            <div class="text-gray-600 space-y-2 mb-4">
+                                <p>• Cerámica</p>
+                                <p>• Pintura</p>
+                                <p>• Textil</p>
+                                <p class="text-sm mt-3">Dejanos tu contacto para avisarte cuando abran las inscripciones</p>
+                            </div>
+                            <a href="https://wa.me/542213627269?text=Hola!%20Quiero%20que%20me%20avisen%20sobre%20nuevos%20talleres" target="_blank" class="block text-center bg-purpura text-white px-4 py-2 rounded-full hover:bg-purpura/90 transition-all">
+                                Quiero info
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
+    
+    <!-- Mensajes Clave -->
+    <section class="py-20 bg-gradient-to-r from-coral/10 to-azul-profundo/10">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-black mb-6">
+                        Esto no es terapia.<br>
+                        <span class="text-coral">Pero puede hacerte bien igual.</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-6">
+                        En Trinomio no buscamos la perfección. Celebramos el error como parte del proceso creativo. 
+                        Aquí no hay presión por resultados, solo el placer de hacer con las manos.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-2 h-2 bg-coral rounded-full mt-2"></div>
+                            <p class="text-gray-700">Hacés. Pausás. Volvés. Todo está bien.</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-2 h-2 bg-azul-profundo rounded-full mt-2"></div>
+                            <p class="text-gray-700">Sin presión por ser "creativo"</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-2 h-2 bg-verde-menta rounded-full mt-2"></div>
+                            <p class="text-gray-700">Todos los niveles son bienvenidos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-white rounded-3xl p-8 shadow-xl">
+                        <blockquote class="text-xl italic text-gray-600 mb-4">
+                            "En Trinomio encontré ese espacio que no sabía que necesitaba. 
+                            No es trabajo, no es casa. Es ese tercer lugar donde puedo ser yo, 
+                            crear sin presión y conectar con otros que también buscan su pausa activa."
+                        </blockquote>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-coral/20 rounded-full"></div>
+                            <div>
+                                <p class="font-semibold">María José</p>
+                                <p class="text-sm text-gray-500">Taller de Cerámica</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-amarillo-ocre/20 rounded-full organic-shape -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- El Espacio Section -->
+    <section id="espacio" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black mb-4">El Espacio</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Un lugar pensado para inspirar sin intimidar
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="md:col-span-2 md:row-span-2">
+                    <div class="rounded-3xl h-full relative overflow-hidden min-h-[400px]">
+                        <img src="imagenes/logo-pared-trinomio.jpg" alt="Logo de Trinomio en la pared del taller" class="w-full h-full object-cover" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 text-white">
+                            <h3 class="text-2xl font-bold mb-2">500m² de creatividad</h3>
+                            <p class="text-white/90">Espacio amplio y luminoso</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-azul-profundo/20 to-azul-profundo/10 rounded-3xl p-6">
+                    <div class="text-4xl mb-2">🛠️</div>
+                    <h4 class="font-bold mb-1">Herramientas Profesionales</h4>
+                    <p class="text-sm text-gray-600">Todo lo que necesitas está aquí</p>
+                </div>
+                <div class="bg-gradient-to-br from-verde-menta/20 to-verde-menta/10 rounded-3xl p-6">
+                    <div class="text-4xl mb-2">☕</div>
+                    <h4 class="font-bold mb-1">Área de Descanso</h4>
+                    <p class="text-sm text-gray-600">Café, mate y buenas charlas</p>
+                </div>
+                <div class="bg-gradient-to-br from-amarillo-ocre/20 to-amarillo-ocre/10 rounded-3xl p-6">
+                    <div class="text-4xl mb-2">🌱</div>
+                    <h4 class="font-bold mb-1">Materiales Naturales</h4>
+                    <p class="text-sm text-gray-600">Trabajamos con conciencia</p>
+                </div>
+                <div class="bg-gradient-to-br from-purpura/20 to-purpura/10 rounded-3xl p-6">
+                    <div class="text-4xl mb-2">👥</div>
+                    <h4 class="font-bold mb-1">Grupos Reducidos</h4>
+                    <p class="text-sm text-gray-600">Atención personalizada</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- CTA Section -->
-    <section class="cta-section" id="contacto">
-        <div class="cta-background">
-            <img src="imagenes/espacio-taller-general.jpg" alt="Espacio Trinomio" loading="lazy">
-        </div>
-        <div class="container">
-            <div class="cta-content" data-aos="zoom-in">
-                <h2>Hacés. Pausás. Volvés.<br>Todo está bien.</h2>
-                <p class="cta-text">
-                    No hay que hacer mucho. A veces alcanza con hacer algo.
-                </p>
-                <div class="cta-buttons">
-                    <a href="#" class="btn btn-white">Agendar visita</a>
-                    <a href="#" class="btn btn-outline">Hacer consulta</a>
-                </div>
-                <p class="cta-note">
-                    "Esto no es terapia. Pero puede hacerte bien igual."
-                </p>
+    <section class="py-20 bg-gradient-to-br from-coral to-coral/80">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-6">
+                ¿Listo para empezar tu proceso?
+            </h2>
+            <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                No prometemos transformar tu vida. Pero capaz sí tu semana.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://taplink.cc/trinomiocb" target="_blank" class="bg-white text-coral px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all">
+                    Inscribirme a un Taller
+                </a>
+                <a href="https://wa.me/542213627269?text=Hola!%20Tengo%20una%20consulta%20sobre%20los%20talleres" target="_blank" class="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-coral transition-all">
+                    Hacer una Consulta
+                </a>
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="logo-trinomio.png" alt="Trinomio Logo" class="logo" width="40" height="40">
-                    <span class="brand-text">TRINOMIO</span>
+    
+    <!-- Contact Footer -->
+    <footer id="contacto" class="bg-gris-carbon text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="logo-trinomio.png" alt="Trinomio" class="w-10 h-10 object-contain">
+                        <span class="text-xl font-black">TRINOMIO</span>
+                    </div>
+                    <p class="text-gray-400">
+                        Un espacio donde tus ideas toman forma
+                    </p>
                 </div>
-                <div class="footer-info">
-                    <p>Un espacio donde tus ideas toman forma.</p>
-                    <p>La Plata, Buenos Aires</p>
+                
+                <!-- Horarios -->
+                <div>
+                    <h3 class="font-bold mb-4">Horarios</h3>
+                    <p class="text-gray-400">
+                        Lunes: Restauración 18hs<br>
+                        Martes: Modelado Adultos 18hs<br>
+                        Miércoles: Modelado Niños 18hs<br>
+                        Jueves: Carpintería 18hs<br>
+                        <br>
+                        Clases de 2 a 2.5 horas
+                    </p>
                 </div>
-                <div class="footer-links">
-                    <a href="#">Instagram</a>
-                    <a href="#">WhatsApp</a>
-                    <a href="#">Email</a>
+                
+                <!-- Contacto -->
+                <div>
+                    <h3 class="font-bold mb-4">Contacto</h3>
+                    <p class="text-gray-400">
+                        📍 Cno. Gral. Belgrano 480<br>
+                        City Bell 1894<br>
+                        📧 trinomiocb@gmail.com<br>
+                        📱 <a href="https://wa.me/542213627269" target="_blank" class="hover:text-coral transition-colors">+54 221 362-7269</a><br>
+                        💬 <a href="https://wa.me/542213627269" target="_blank" class="hover:text-coral transition-colors">WhatsApp</a>
+                    </p>
+                </div>
+                
+                <!-- Redes -->
+                <div>
+                    <h3 class="font-bold mb-4">Seguinos</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/trinomiocb/" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-coral transition-colors" title="Instagram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/></svg>
+                        </a>
+                        <a href="https://taplink.cc/trinomiocb" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-coral transition-colors" title="Más info">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Trinomio. Un lugar que está hecho con sentido.</p>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2024 Trinomio. El proceso es el valor.
+                </p>
             </div>
         </div>
     </footer>
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/542213627269?text=Hola!%20Vengo%20de%20la%20web%20y%20quiero%20info%20sobre%20los%20talleres" 
+       target="_blank" 
+       class="fixed bottom-8 right-8 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-all hover:scale-110 z-50"
+       title="Chateá con nosotros">
+        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+    </a>
+    
 </body>
 </html>

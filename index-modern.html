@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trinomio - Un espacio para aprender haciendo, compartir sin obligación y estar bien. Talleres de madera, cerámica, arte y más.">
+    <meta name="keywords" content="talleres, artesanía, madera, cerámica, arte, bienestar, creatividad">
+    <meta property="og:title" content="Trinomio - Espacio de talleres creativos">
+    <meta property="og:description" content="Un espacio donde hacer tenga lógica y propósito. Talleres de madera, cerámica, arte y más en La Plata.">
+    <meta property="og:image" content="imagenes/logo-pared-trinomio.jpg">
+    <meta property="og:url" content="https://sefeguz.github.io/trinomio-landing">
+    <meta property="og:type" content="website">
+    <title>Trinomio - Espacio de talleres creativos</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="logo-trinomio.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="logo-trinomio.png">
+    
+    <!-- Google Fonts - GOTHAM y LATO según manual de marca -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- GSAP for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'trinomio-coral': '#E86D5A',
+                        'trinomio-gray': '#474747',
+                        'trinomio-blue': '#2E5266',
+                        'trinomio-light': '#F3E8DC',
+                        'trinomio-gray-light': '#C1BDB3',
+                        'trinomio-mint': '#A7B7A1',
+                        'trinomio-yellow': '#D9A441',
+                        'trinomio-purple': '#B7AABF'
+                    },
+                    fontFamily: {
+                        'gotham': ['Gotham', 'Helvetica Neue', 'sans-serif'],
+                        'lato': ['Lato', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'gradient': 'gradient 15s ease infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'morph': 'morph 8s ease-in-out infinite',
+                        'slide-in': 'slide-in 0.5s ease-out',
+                        'fade-in': 'fade-in 0.8s ease-out',
+                        'wiggle': 'wiggle 0.5s ease-in-out infinite',
+                        'text-glow': 'text-shadow-pop 0.6s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-20px) rotate(2deg)' },
+                        },
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                        morph: {
+                            '0%, 100%': { borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%' },
+                            '34%': { borderRadius: '70% 30% 50% 50% / 30% 30% 70% 70%' },
+                            '67%': { borderRadius: '100% 60% 60% 100% / 100% 100% 60% 60%' }
+                        },
+                        'slide-in': {
+                            '0%': { transform: 'translateX(-100%)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' }
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        },
+                        'text-shadow-pop': {
+                            '0%': { textShadow: '0 0 0 rgba(0,0,0,0)' },
+                            '100%': { textShadow: '2px 2px 8px rgba(232,109,90,0.5)' }
+                        }
+                    },
+                    backgroundSize: {
+                        '400%': '400% 400%',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        /* Fuente Gotham fallback */
+        @font-face {
+            font-family: 'Gotham';
+            src: local('Gotham'), local('Helvetica Neue Bold');
+            font-weight: 700;
+        }
+        
+        /* Glassmorphism effect mejorado */
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+        
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(16px) saturate(200%);
+            -webkit-backdrop-filter: blur(16px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Efecto de cursor personalizado */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #E86D5A;
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .cursor-outline {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #E86D5A;
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease;
+        }
+        
+        /* Efecto de texto líquido */
+        .liquid-text {
+            filter: url('#liquid');
+            animation: liquid-move 8s ease-in-out infinite;
+        }
+        
+        @keyframes liquid-move {
+            0%, 100% { filter: url('#liquid'); }
+            50% { filter: url('#liquid2'); }
+        }
+        
+        /* Animated gradient background */
+        .gradient-animate {
+            background: linear-gradient(-45deg, #E86D5A, #2E5266, #D9A441, #A7B7A1);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        /* Neumorphism mejorado */
+        .neumorphic {
+            background: linear-gradient(145deg, #ffffff, #F3E8DC);
+            box-shadow: 20px 20px 60px #cfc5b3, 
+                        -20px -20px 60px #ffffff,
+                        inset 1px 1px 3px rgba(255,255,255,0.6);
+            border-radius: 20px;
+            position: relative;
+        }
+        
+        .neumorphic:hover {
+            box-shadow: 25px 25px 70px #cfc5b3, 
+                        -25px -25px 70px #ffffff,
+                        inset 2px 2px 5px rgba(255,255,255,0.8);
+        }
+        
+        .neumorphic-inset {
+            background: #F3E8DC;
+            box-shadow: inset 20px 20px 60px #cfc5b3, 
+                        inset -20px -20px 60px #ffffff;
+        }
+        
+        /* Efecto de partículas */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #E86D5A;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: particle-float 20s infinite linear;
+        }
+        
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* 3D Card effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+        
+        .card-3d:hover {
+            transform: perspective(1000px) rotateY(10deg) rotateX(-10deg) scale(1.05);
+        }
+        
+        /* Magnetic button effect */
+        .magnetic-button {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* Blob animation */
+        .blob {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            animation: morph 8s ease-in-out infinite;
+        }
+        
+        @keyframes morph {
+            0%, 100% {
+                border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            }
+            34% {
+                border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+            }
+            67% {
+                border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;
+            }
+        }
+        
+        /* Text gradient */
+        .text-gradient {
+            background: linear-gradient(135deg, #E86D5A 0%, #2E5266 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Parallax layers */
+        .parallax {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #F3E8DC;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #E86D5A, #2E5266);
+            border-radius: 5px;
+        }
+        
+        /* Hover lift with shadow */
+        .hover-lift {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(232, 109, 90, 0.3);
+        }
+        
+        /* Animated underline */
+        .hover-underline {
+            position: relative;
+        }
+        
+        .hover-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #E86D5A, #2E5266);
+            transition: width 0.3s ease;
+        }
+        
+        .hover-underline:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-trinomio-light text-trinomio-gray antialiased overflow-x-hidden">
+    
+    <!-- SVG Filters for Liquid Effects -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <!-- Liquid morph filter -->
+            <filter id="liquid">
+                <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="turbulence"/>
+                <feColorMatrix in="turbulence" type="saturate" values="0"/>
+                <feComponentTransfer>
+                    <feFuncA type="discrete" tableValues="0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1"/>
+                </feComponentTransfer>
+                <feGaussianBlur stdDeviation="2"/>
+                <feComposite operator="over" in2="SourceGraphic"/>
+            </filter>
+            
+            <!-- Gooey effect filter -->
+            <filter id="gooey">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"/>
+                <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+            </filter>
+            
+            <!-- Distortion filter -->
+            <filter id="distortion">
+                <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence"/>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="20" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            
+            <!-- Wave filter -->
+            <filter id="wave">
+                <feTurbulence baseFrequency="0.02 0.06" numOctaves="4" seed="2"/>
+                <feDisplacementMap in="SourceGraphic" scale="20"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Animated Background Pattern -->
+    <div class="fixed inset-0 z-0 opacity-30">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-trinomio-coral/20 rounded-full filter blur-3xl animate-float"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-trinomio-blue/20 rounded-full filter blur-3xl animate-float-delayed"></div>
+        <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-trinomio-yellow/10 rounded-full filter blur-3xl animate-pulse-slow"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav x-data="{ open: false, scrolled: false }" 
+         @scroll.window="scrolled = (window.pageYOffset > 20)"
+         :class="scrolled ? 'glass shadow-2xl' : 'bg-transparent'"
+         class="fixed top-0 w-full z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 lg:h-20">
+                <!-- Logo oficial de Trinomio -->
+                <div class="flex items-center space-x-3 group cursor-pointer">
+                    <div class="relative">
+                        <img src="logo-trinomio.png" alt="Trinomio Logo" 
+                             class="h-12 w-12 transform transition-transform group-hover:scale-110 group-hover:rotate-3">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-trinomio-coral to-trinomio-blue rounded-lg opacity-0 group-hover:opacity-50 blur transition-opacity"></div>
+                    </div>
+                    <span class="font-gotham font-bold text-2xl text-trinomio-gray tracking-wider">TRINOMIO</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#inicio" class="font-lato font-medium hover-underline text-trinomio-gray hover:text-trinomio-coral transition-colors">Inicio</a>
+                    <a href="#valores" class="font-lato font-medium hover-underline text-trinomio-gray hover:text-trinomio-coral transition-colors">Valores</a>
+                    <a href="#talleres" class="font-lato font-medium hover-underline text-trinomio-gray hover:text-trinomio-coral transition-colors">Talleres</a>
+                    <a href="#testimonios" class="font-lato font-medium hover-underline text-trinomio-gray hover:text-trinomio-coral transition-colors">Experiencias</a>
+                    <a href="#contacto" class="magnetic-button relative overflow-hidden bg-gradient-to-r from-trinomio-coral to-trinomio-blue text-white px-6 py-2.5 rounded-full font-gotham font-semibold group">
+                        <span class="relative z-10">Empezá hoy</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-trinomio-blue to-trinomio-coral opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="open = !open" class="lg:hidden p-2 group">
+                    <div class="w-6 h-6 relative">
+                        <span class="absolute w-full h-0.5 bg-trinomio-gray transition-all duration-300 ease-out"
+                              :class="open ? 'top-3 rotate-45' : 'top-1'"></span>
+                        <span class="absolute w-full h-0.5 bg-trinomio-gray top-3 transition-all duration-300 ease-out"
+                              :class="open ? 'opacity-0' : 'opacity-100'"></span>
+                        <span class="absolute w-full h-0.5 bg-trinomio-gray transition-all duration-300 ease-out"
+                              :class="open ? 'top-3 -rotate-45' : 'top-5'"></span>
+                    </div>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu con Glassmorphism -->
+            <div x-show="open" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 -translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-4"
+                 class="lg:hidden glass rounded-2xl mt-2 overflow-hidden">
+                <div class="px-4 py-6 space-y-3">
+                    <a href="#inicio" @click="open = false" class="block px-4 py-3 font-lato text-trinomio-gray hover:text-trinomio-coral hover:bg-white/20 rounded-lg transition-all">Inicio</a>
+                    <a href="#valores" @click="open = false" class="block px-4 py-3 font-lato text-trinomio-gray hover:text-trinomio-coral hover:bg-white/20 rounded-lg transition-all">Valores</a>
+                    <a href="#talleres" @click="open = false" class="block px-4 py-3 font-lato text-trinomio-gray hover:text-trinomio-coral hover:bg-white/20 rounded-lg transition-all">Talleres</a>
+                    <a href="#testimonios" @click="open = false" class="block px-4 py-3 font-lato text-trinomio-gray hover:text-trinomio-coral hover:bg-white/20 rounded-lg transition-all">Experiencias</a>
+                    <a href="#contacto" @click="open = false" class="block mt-4 text-center bg-gradient-to-r from-trinomio-coral to-trinomio-blue text-white px-6 py-3 rounded-full font-gotham font-semibold">
+                        Empezá hoy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section con Video/Imagen Background y Parallax -->
+    <section id="inicio" class="relative min-h-screen flex items-center overflow-hidden">
+        <!-- Background con efecto parallax -->
+        <div class="absolute inset-0 z-0">
+            <img src="imagenes/espacio-taller-general.jpg" alt="Espacio Trinomio" 
+                 class="w-full h-full object-cover parallax"
+                 data-speed="0.5">
+            <div class="absolute inset-0 bg-gradient-to-br from-trinomio-coral/90 via-trinomio-blue/70 to-trinomio-gray/90"></div>
+        </div>
+        
+        <!-- Elementos decorativos flotantes -->
+        <div class="absolute top-20 right-10 w-72 h-72 bg-white/10 blob animate-float hidden lg:block"></div>
+        <div class="absolute bottom-20 left-10 w-96 h-96 bg-trinomio-coral/10 rounded-full animate-spin-slow hidden lg:block"></div>
+        
+        <!-- Grid pattern overlay -->
+        <div class="absolute inset-0 opacity-10"
+             style="background-image: repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 70px);">
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+            <div class="max-w-4xl">
+                <div class="overflow-hidden">
+                    <h1 class="font-gotham text-5xl sm:text-6xl lg:text-8xl font-black text-white mb-6 leading-tight"
+                        data-aos="fade-up">
+                        <span class="inline-block transform hover:scale-105 transition-transform">¿Te equivocaste?</span><br>
+                        <span class="text-gradient inline-block transform hover:scale-105 transition-transform">Bien.</span>
+                        <span class="text-white/90 inline-block transform hover:scale-105 transition-transform"> Estás haciendo.</span>
+                    </h1>
+                </div>
+                <p class="font-lato text-xl sm:text-2xl lg:text-3xl text-white/90 mb-12 leading-relaxed font-light"
+                   data-aos="fade-up" data-aos-delay="200">
+                    Un espacio donde hacer tenga <span class="font-bold text-white">lógica y propósito</span>. 
+                    Donde aprender haciendo, sin exigencias, con técnica y estética, en comunidad.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="400">
+                    <button class="group relative overflow-hidden bg-white text-trinomio-coral px-8 py-4 rounded-full font-gotham font-bold hover:shadow-2xl transform transition-all hover:scale-105">
+                        <span class="relative z-10">Explorar talleres</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-trinomio-coral to-trinomio-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                        <span class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                            Explorar talleres →
+                        </span>
+                    </button>
+                    <button class="glass border-2 border-white text-white px-8 py-4 rounded-full font-gotham font-bold hover:bg-white hover:text-trinomio-coral transition-all hover:scale-105">
+                        Conocer más
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce-slow">
+            <svg class="w-6 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Values Section con Bento Grid -->
+    <section id="valores" class="py-20 lg:py-32 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-gotham text-4xl sm:text-5xl lg:text-6xl font-black text-trinomio-gray mb-6">
+                    No se trata de hacerlo <span class="text-gradient">perfecto</span>.
+                </h2>
+                <p class="font-lato text-2xl lg:text-3xl text-trinomio-coral font-bold">
+                    Se trata de hacerlo tuyo.
+                </p>
+            </div>
+            
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[250px]">
+                <!-- Large Card - Bienestar -->
+                <div class="md:col-span-2 lg:col-span-2 group neumorphic rounded-3xl p-8 hover-lift cursor-pointer">
+                    <div class="h-full flex flex-col justify-between">
+                        <div>
+                            <div class="w-20 h-20 bg-gradient-to-br from-trinomio-coral to-trinomio-coral/50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                                <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-gotham text-3xl font-bold text-trinomio-gray mb-3">Bienestar</h3>
+                        </div>
+                        <p class="font-lato text-lg text-trinomio-gray/80 leading-relaxed">
+                            Un momento para estar, hacer, crear y compartir con otros. Donde el proceso importa más que el resultado.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Medium Card - Creatividad -->
+                <div class="group bg-gradient-to-br from-trinomio-blue/10 to-trinomio-blue/5 rounded-3xl p-6 hover-lift cursor-pointer">
+                    <div class="h-full flex flex-col justify-between">
+                        <div class="w-16 h-16 glass-dark rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8 text-trinomio-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-gotham text-2xl font-bold text-trinomio-gray mb-2">Creatividad</h3>
+                            <p class="font-lato text-trinomio-gray/70">
+                                Explorar sin miedo, con método pero sin rigidez.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Small Card - Pausa -->
+                <div class="group bg-gradient-to-br from-trinomio-yellow/10 to-trinomio-yellow/5 rounded-3xl p-6 hover-lift cursor-pointer">
+                    <div class="h-full flex flex-col justify-between">
+                        <div class="w-16 h-16 bg-trinomio-yellow/20 rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-180 transition-transform duration-700">
+                            <svg class="w-8 h-8 text-trinomio-yellow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-gotham text-2xl font-bold text-trinomio-gray mb-2">Pausa</h3>
+                            <p class="font-lato text-trinomio-gray/70">
+                                Desconectar para volver a conectar.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Wide Card - Comunidad -->
+                <div class="md:col-span-2 group neumorphic rounded-3xl p-8 hover-lift cursor-pointer">
+                    <div class="h-full flex items-center justify-between">
+                        <div>
+                            <h3 class="font-gotham text-3xl font-bold text-trinomio-gray mb-3">Comunidad</h3>
+                            <p class="font-lato text-lg text-trinomio-gray/80">
+                                Compartir sin obligación, estar sin necesidad de explicarlo.
+                            </p>
+                        </div>
+                        <div class="w-24 h-24 bg-gradient-to-br from-trinomio-mint to-trinomio-mint/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tall Card - Compromiso -->
+                <div class="md:row-span-2 group bg-gradient-to-b from-trinomio-coral/5 to-trinomio-coral/10 rounded-3xl p-8 hover-lift cursor-pointer">
+                    <div class="h-full flex flex-col justify-between">
+                        <div>
+                            <div class="w-full h-32 bg-gradient-to-br from-trinomio-coral to-trinomio-blue rounded-2xl mb-6 relative overflow-hidden group-hover:scale-105 transition-transform">
+                                <div class="absolute inset-0 bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="font-gotham text-2xl font-bold text-trinomio-gray mb-3">Compromiso</h3>
+                        </div>
+                        <p class="font-lato text-trinomio-gray/80">
+                            Con vos mismo, con el proceso, con el espacio. Sin presiones externas.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Small Card - Autenticidad -->
+                <div class="group glass rounded-3xl p-6 hover-lift cursor-pointer">
+                    <div class="h-full flex flex-col justify-center items-center text-center">
+                        <div class="w-20 h-20 bg-gradient-to-tr from-trinomio-purple to-trinomio-purple/30 rounded-full flex items-center justify-center mb-4 group-hover:animate-pulse">
+                            <span class="text-3xl">✨</span>
+                        </div>
+                        <h3 class="font-gotham text-xl font-bold text-trinomio-gray">Autenticidad</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proposition Section con Split Screen -->
+    <section class="py-20 lg:py-32 bg-gradient-to-br from-white via-trinomio-light to-white relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-trinomio-coral/5 rounded-full filter blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-trinomio-blue/5 rounded-full filter blur-3xl"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1">
+                    <h2 class="font-gotham text-4xl sm:text-5xl lg:text-6xl font-black text-trinomio-gray mb-8">
+                        Cultura del hacer 
+                        <span class="text-gradient">sin presión</span>
+                    </h2>
+                    <p class="font-lato text-lg text-trinomio-gray/80 mb-6 leading-relaxed">
+                        En la mayoría de los talleres similares, el foco está puesto en aprender una técnica, 
+                        terminar un producto o adquirir una habilidad específica.
+                    </p>
+                    <p class="font-lato text-lg text-trinomio-gray mb-8 leading-relaxed">
+                        En este espacio, el foco está en cómo lo vivís mientras lo hacés. 
+                        <span class="font-bold text-trinomio-coral">El resultado no es la prioridad. El proceso es el valor.</span>
+                    </p>
+                    <div class="glass-dark rounded-2xl p-8 backdrop-blur-lg">
+                        <p class="font-lato text-xl italic text-trinomio-gray leading-relaxed">
+                            "No prometemos transformar tu vida. Pero capaz sí tu semana. 
+                            Y a veces, eso alcanza."
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="order-1 lg:order-2">
+                    <div class="relative group">
+                        <!-- 3D Image Container -->
+                        <div class="relative card-3d">
+                            <img src="imagenes/mesa-trabajo-madera.jpg" alt="Mesa de trabajo" 
+                                 class="rounded-3xl shadow-2xl w-full">
+                            <div class="absolute inset-0 bg-gradient-to-t from-trinomio-gray/50 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                        
+                        <!-- Floating elements -->
+                        <div class="absolute -top-6 -right-6 w-24 h-24 bg-trinomio-coral rounded-2xl animate-float opacity-70"></div>
+                        <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-trinomio-blue rounded-full animate-float-delayed opacity-50"></div>
+                        
+                        <!-- Info cards -->
+                        <div class="absolute top-4 left-4 glass rounded-xl px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <p class="font-gotham text-white font-bold">Proceso > Resultado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workshops Section con Cards 3D y Filtros -->
+    <section id="talleres" class="py-20 lg:py-32 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-gotham text-4xl sm:text-5xl lg:text-6xl font-black text-trinomio-gray mb-6">
+                    Las <span class="text-gradient">dimensiones</span> del hacer
+                </h2>
+                <p class="font-lato text-xl text-trinomio-gray/80 max-w-3xl mx-auto">
+                    No hay una única forma de habitar el hacer. Por eso usamos la idea de dimensiones 
+                    para organizar lo que pasa en el espacio.
+                </p>
+            </div>
+            
+            <!-- Filter Pills -->
+            <div x-data="{ activeFilter: 'todos' }" class="space-y-8">
+                <div class="flex flex-wrap justify-center gap-3 mb-12">
+                    <button @click="activeFilter = 'todos'" 
+                            :class="activeFilter === 'todos' ? 'bg-gradient-to-r from-trinomio-coral to-trinomio-blue text-white' : 'glass text-trinomio-gray'"
+                            class="px-6 py-3 rounded-full font-gotham font-semibold transition-all hover:scale-105">
+                        Todos
+                    </button>
+                    <button @click="activeFilter = 'madera'" 
+                            :class="activeFilter === 'madera' ? 'bg-gradient-to-r from-yellow-600 to-yellow-800 text-white' : 'glass text-trinomio-gray'"
+                            class="px-6 py-3 rounded-full font-gotham font-semibold transition-all hover:scale-105">
+                        Madera
+                    </button>
+                    <button @click="activeFilter = 'herreria'" 
+                            :class="activeFilter === 'herreria' ? 'bg-gradient-to-r from-gray-600 to-gray-800 text-white' : 'glass text-trinomio-gray'"
+                            class="px-6 py-3 rounded-full font-gotham font-semibold transition-all hover:scale-105">
+                        Herrería
+                    </button>
+                    <button @click="activeFilter = 'ceramica'" 
+                            :class="activeFilter === 'ceramica' ? 'bg-gradient-to-r from-orange-400 to-red-500 text-white' : 'glass text-trinomio-gray'"
+                            class="px-6 py-3 rounded-full font-gotham font-semibold transition-all hover:scale-105">
+                        Cerámica
+                    </button>
+                    <button @click="activeFilter = 'textil'" 
+                            :class="activeFilter === 'textil' ? 'bg-gradient-to-r from-green-400 to-green-600 text-white' : 'glass text-trinomio-gray'"
+                            class="px-6 py-3 rounded-full font-gotham font-semibold transition-all hover:scale-105">
+                        Textil
+                    </button>
+                </div>
+                
+                <!-- Workshop Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Madera Card -->
+                    <div x-show="activeFilter === 'todos' || activeFilter === 'madera'"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-90"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         class="group relative">
+                        <div class="neumorphic rounded-3xl overflow-hidden hover-lift">
+                            <!-- Image Container -->
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="imagenes/mesa-trabajo-madera.jpg" alt="Taller de madera" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4">
+                                    <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm font-gotham font-semibold">
+                                        DIMENSIÓN MADERA
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="p-6">
+                                <h3 class="font-gotham text-2xl font-bold text-trinomio-gray mb-3">
+                                    Carpintería Creativa
+                                </h3>
+                                <p class="font-lato text-trinomio-gray/80 mb-4">
+                                    Herramientas reales, proyectos reales. Restauración y creación desde cero.
+                                </p>
+                                <div class="space-y-2 mb-6">
+                                    <div class="flex items-center text-sm text-trinomio-gray/70">
+                                        <svg class="w-5 h-5 mr-2 text-trinomio-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Martes y Jueves - 18:00 a 21:00
+                                    </div>
+                                    <div class="flex items-center text-sm text-trinomio-gray/70">
+                                        <svg class="w-5 h-5 mr-2 text-trinomio-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        Máximo 8 personas
+                                    </div>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-yellow-600 to-yellow-800 text-white py-3 rounded-xl font-gotham font-semibold hover:shadow-lg transition-all">
+                                    Inscribirme
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Herrería Card -->
+                    <div x-show="activeFilter === 'todos' || activeFilter === 'herreria'"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-90"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         class="group relative">
+                        <div class="neumorphic rounded-3xl overflow-hidden hover-lift">
+                            <!-- Image Container -->
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="imagenes/taladro-banco-herramientas.jpg" alt="Taller de herrería" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4">
+                                    <span class="bg-gray-700 text-white px-3 py-1 rounded-full text-sm font-gotham font-semibold">
+                                        DIMENSIÓN HERRERÍA
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="p-6">
+                                <h3 class="font-gotham text-2xl font-bold text-trinomio-gray mb-3">
+                                    Metalurgia Artística
+                                </h3>
+                                <p class="font-lato text-trinomio-gray/80 mb-4">
+                                    Soldadura, forja y diseño. La fuerza del metal transformada en arte.
+                                </p>
+                                <div class="space-y-2 mb-6">
+                                    <div class="flex items-center text-sm text-trinomio-gray/70">
+                                        <svg class="w-5 h-5 mr-2 text-trinomio-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Martes y Viernes - 18:00 a 21:00
+                                    </div>
+                                    <div class="flex items-center text-sm text-trinomio-gray/70">
+                                        <svg class="w-5 h-5 mr-2 text-trinomio-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        Máximo 6 personas
+                                    </div>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white py-3 rounded-xl font-gotham font-semibold hover:shadow-lg transition-all">
+                                    Inscribirme
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cerámica Card -->
+                    <div x-show="activeFilter === 'todos' || activeFilter === 'ceramica'"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-90"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         class="group relative">
+                        <div class="neumorphic rounded-3xl overflow-hidden hover-lift">
+                            <!-- Image Container -->
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="imagenes/espacio-taller-general.jpg" alt="Taller de cerámica" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4">
+                                    <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-gotham font-semibold">
+                                        DIMENSIÓN CERÁMICA
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="p-6">
+                                <h3 class="font-gotham text-2xl font-bold text-trinomio-gray mb-3">
+                                    Alfarería Contemporánea
+                                </h3>
+                                <p class="font-lato text-trinomio-gray/80 mb-4">
+                                    Torno, modelado y esmaltes. Cada pieza cuenta una historia única.
+                                </p>
+                                <div class="space-y-2 mb-6">
+                                    <div class="flex items-center text-sm text-trinomio-gray/70">
+                                        <svg class="w-5 h-5 mr-2 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Lunes y Miércoles - 18:00 a 21:00
+                                    </div>
+                                    <div class="flex items-center text-sm text-trinomio-gray/70">
+                                        <svg class="w-5 h-5 mr-2 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        Máximo 10 personas
+                                    </div>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 rounded-xl font-gotham font-semibold hover:shadow-lg transition-all">
+                                    Inscribirme
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Textil Card -->
+                    <div x-show="activeFilter === 'todos' || activeFilter === 'textil'"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-90"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         class="group relative">
+                        <div class="neumorphic rounded-3xl overflow-hidden hover-lift">
+                            <!-- Image Container -->
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="imagenes/logo-herramientas-vintage.jpg" alt="Taller textil" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4">
+                                    <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-gotham font-semibold">
+                                        DIMENSIÓN TEXTIL
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="p-6">
+                                <h3 class="font-gotham text-2xl font-bold text-trinomio-gray mb-3">
+                                    Tejido y Bordado
+                                </h3>
+                                <p class="font-lato text-trinomio-gray/80 mb-4">
+                                    Técnicas ancestrales con mirada contemporánea. Ritmo pausado.
+                                </p>
+                                <div class="space-y-2 mb-6">
+                                    <div class="flex items-center text-sm text-trinomio-gray/70">
+                                        <svg class="w-5 h-5 mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Sábados - 10:00 a 13:00
+                                    </div>
+                                    <div class="flex items-center text-sm text-trinomio-gray/70">
+                                        <svg class="w-5 h-5 mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        Máximo 8 personas
+                                    </div>
+                                </div>
+                                <button class="w-full bg-gradient-to-r from-green-400 to-green-600 text-white py-3 rounded-xl font-gotham font-semibold hover:shadow-lg transition-all">
+                                    Inscribirme
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quote -->
+            <div class="mt-20 text-center">
+                <p class="font-lato text-3xl italic text-trinomio-gray">
+                    "Si no sabés por dónde empezar, <span class="text-gradient font-bold">empezá por estar</span>."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section con Carousel 3D -->
+    <section id="testimonios" class="py-20 lg:py-32 bg-gradient-to-br from-trinomio-light via-white to-trinomio-light relative overflow-hidden">
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-trinomio-coral rounded-full filter blur-3xl"></div>
+            <div class="absolute bottom-10 right-10 w-64 h-64 bg-trinomio-blue rounded-full filter blur-3xl"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-gotham text-4xl sm:text-5xl lg:text-6xl font-black text-trinomio-gray mb-6">
+                    Historias reales, <span class="text-gradient">personas reales</span>
+                </h2>
+            </div>
+            
+            <!-- Testimonials Grid con efecto hover 3D -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Testimonial 1 -->
+                <div class="group relative">
+                    <div class="glass rounded-3xl p-8 h-full hover-lift cursor-pointer">
+                        <div class="flex items-center mb-6">
+                            <div class="relative">
+                                <div class="w-16 h-16 bg-gradient-to-br from-trinomio-coral to-trinomio-coral/50 rounded-full flex items-center justify-center text-white font-gotham font-bold text-xl">
+                                    C
+                                </div>
+                                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-gotham font-bold text-trinomio-gray">Carlos, 68</h4>
+                                <p class="font-lato text-sm text-trinomio-gray/60">Dimensión Madera</p>
+                            </div>
+                        </div>
+                        <p class="font-lato text-trinomio-gray/80 italic leading-relaxed">
+                            "Después de jubilarme, buscaba algo real. Acá encontré un lugar donde 
+                            usar mis manos tiene sentido, donde nadie me trata como 'adulto mayor'."
+                        </p>
+                        <div class="mt-4 flex">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="group relative">
+                    <div class="glass rounded-3xl p-8 h-full hover-lift cursor-pointer">
+                        <div class="flex items-center mb-6">
+                            <div class="relative">
+                                <div class="w-16 h-16 bg-gradient-to-br from-trinomio-blue to-trinomio-blue/50 rounded-full flex items-center justify-center text-white font-gotham font-bold text-xl">
+                                    M
+                                </div>
+                                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-gotham font-bold text-trinomio-gray">Martín, 42</h4>
+                                <p class="font-lato text-sm text-trinomio-gray/60">Dimensión Herrería</p>
+                            </div>
+                        </div>
+                        <p class="font-lato text-trinomio-gray/80 italic leading-relaxed">
+                            "Los martes a la noche, mientras sueno metal, no pienso en mails. 
+                            Es mi momento de desconexión real, no ocio pasivo."
+                        </p>
+                        <div class="mt-4 flex">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="group relative">
+                    <div class="glass rounded-3xl p-8 h-full hover-lift cursor-pointer">
+                        <div class="flex items-center mb-6">
+                            <div class="relative">
+                                <div class="w-16 h-16 bg-gradient-to-br from-trinomio-yellow to-trinomio-yellow/50 rounded-full flex items-center justify-center text-white font-gotham font-bold text-xl">
+                                    MJ
+                                </div>
+                                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-gotham font-bold text-trinomio-gray">María José, 54</h4>
+                                <p class="font-lato text-sm text-trinomio-gray/60">Dimensión Cerámica</p>
+                            </div>
+                        </div>
+                        <p class="font-lato text-trinomio-gray/80 italic leading-relaxed">
+                            "Más que aprender cerámica, recuperé algo de mí misma. 
+                            El grupo del miércoles ya es parte fundamental de mi semana."
+                        </p>
+                        <div class="mt-4 flex">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 4 -->
+                <div class="group relative">
+                    <div class="glass rounded-3xl p-8 h-full hover-lift cursor-pointer">
+                        <div class="flex items-center mb-6">
+                            <div class="relative">
+                                <div class="w-16 h-16 bg-gradient-to-br from-trinomio-mint to-trinomio-mint/50 rounded-full flex items-center justify-center text-white font-gotham font-bold text-xl">
+                                    S
+                                </div>
+                                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-gotham font-bold text-trinomio-gray">Sofía, 33</h4>
+                                <p class="font-lato text-sm text-trinomio-gray/60">Dimensión Arte</p>
+                            </div>
+                        </div>
+                        <p class="font-lato text-trinomio-gray/80 italic leading-relaxed">
+                            "Puedo venir sola sin sentirme incómoda. No hay presión por ser 'creativa'. 
+                            Es mi pausa real en la semana."
+                        </p>
+                        <div class="mt-4 flex">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section con Video Background y Glassmorphism -->
+    <section id="contacto" class="relative py-20 lg:py-32 overflow-hidden">
+        <!-- Background with parallax -->
+        <div class="absolute inset-0">
+            <img src="imagenes/espacio-taller-general.jpg" alt="Espacio Trinomio" 
+                 class="w-full h-full object-cover parallax" data-speed="0.3">
+            <div class="absolute inset-0 gradient-animate opacity-90"></div>
+        </div>
+        
+        <!-- Floating elements -->
+        <div class="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full animate-float"></div>
+        <div class="absolute bottom-10 right-10 w-48 h-48 bg-white/10 rounded-full animate-float-delayed"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="glass-dark rounded-3xl p-12 backdrop-blur-xl">
+                <h2 class="font-gotham text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6">
+                    Hacés. Pausás. Volvés.<br>
+                    <span class="text-gradient">Todo está bien.</span>
+                </h2>
+                <p class="font-lato text-2xl text-white/90 mb-10">
+                    No hay que hacer mucho. A veces alcanza con hacer algo.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="group relative overflow-hidden bg-white text-trinomio-coral px-8 py-4 rounded-full font-gotham font-bold hover:shadow-2xl transform transition-all hover:scale-105">
+                        <span class="relative z-10">Agendar visita</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-trinomio-coral to-trinomio-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                        <span class="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                            Agendar visita →
+                        </span>
+                    </button>
+                    <button class="glass border-2 border-white text-white px-8 py-4 rounded-full font-gotham font-bold hover:bg-white hover:text-trinomio-coral transition-all hover:scale-105">
+                        Hacer consulta
+                    </button>
+                </div>
+                <p class="mt-12 font-lato text-xl italic text-white/80">
+                    "Esto no es terapia. Pero puede hacerte bien igual."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Moderno -->
+    <footer class="bg-gradient-to-b from-trinomio-gray to-black text-white py-16 relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,0.05) 35px, rgba(255,255,255,0.05) 70px);"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <img src="logo-trinomio.png" alt="Trinomio Logo" class="h-12 w-12">
+                        <span class="font-gotham font-bold text-2xl">TRINOMIO</span>
+                    </div>
+                    <p class="font-lato text-white/80">
+                        Un espacio donde tus ideas toman forma.
+                    </p>
+                </div>
+                
+                <!-- Location -->
+                <div>
+                    <h3 class="font-gotham font-semibold text-lg mb-4">Ubicación</h3>
+                    <p class="font-lato text-white/80">
+                        La Plata, Buenos Aires<br>
+                        Argentina
+                    </p>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="font-gotham font-semibold text-lg mb-4">Contacto</h3>
+                    <div class="space-y-2">
+                        <a href="#" class="font-lato text-white/80 hover:text-trinomio-coral transition-colors flex items-center">
+                            <span class="mr-2">📷</span> Instagram
+                        </a>
+                        <a href="#" class="font-lato text-white/80 hover:text-trinomio-coral transition-colors flex items-center">
+                            <span class="mr-2">💬</span> WhatsApp
+                        </a>
+                        <a href="#" class="font-lato text-white/80 hover:text-trinomio-coral transition-colors flex items-center">
+                            <span class="mr-2">✉️</span> Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 pt-8 text-center">
+                <p class="font-lato text-white/60">
+                    © 2024 Trinomio. Un lugar que está hecho con sentido.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP Animations & Interactive Effects -->
+    <script>
+        // Initialize GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Parallax effect
+        gsap.utils.toArray('.parallax').forEach(layer => {
+            const speed = layer.dataset.speed || 0.5;
+            gsap.to(layer, {
+                yPercent: -100 * speed,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: layer.closest('section'),
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+        });
+        
+        // Fade up animations
+        gsap.utils.toArray('[data-aos="fade-up"]').forEach(element => {
+            gsap.from(element, {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+        
+        // Magnetic button effect
+        document.querySelectorAll('.magnetic-button').forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                gsap.to(button, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                gsap.to(button, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // Custom Cursor Implementation
+        const cursor = document.createElement('div');
+        const cursorDot = document.createElement('div');
+        cursor.style.cssText = `
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #E86D5A;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s, opacity 0.15s;
+            mix-blend-mode: difference;
+        `;
+        cursorDot.style.cssText = `
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: #E86D5A;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        `;
+        document.body.appendChild(cursor);
+        document.body.appendChild(cursorDot);
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Immediate dot movement
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+
+        // Smooth cursor animation
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            
+            cursor.style.left = cursorX - 20 + 'px';
+            cursor.style.top = cursorY - 20 + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Cursor hover effects
+        const interactiveElements = document.querySelectorAll('a, button, .hover-lift, .card-3d, .neumorphic, .glass');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursor.style.borderColor = '#52B788';
+                cursorDot.style.background = '#52B788';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.borderColor = '#E86D5A';
+                cursorDot.style.background = '#E86D5A';
+            });
+        });
+
+        // Interactive Particle System
+        class ParticleSystem {
+            constructor() {
+                this.canvas = document.createElement('canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.mouse = { x: 0, y: 0 };
+                this.isActive = false;
+                
+                this.setup();
+                this.animate();
+            }
+            
+            setup() {
+                this.canvas.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 1;
+                `;
+                document.body.appendChild(this.canvas);
+                
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                
+                // Create particles on mouse move
+                let moveTimer;
+                window.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                    this.isActive = true;
+                    
+                    // Create particle trail
+                    if (Math.random() > 0.85) {
+                        this.createParticle(e.clientX, e.clientY);
+                    }
+                    
+                    clearTimeout(moveTimer);
+                    moveTimer = setTimeout(() => {
+                        this.isActive = false;
+                    }, 100);
+                });
+
+                // Create particles on click
+                window.addEventListener('click', (e) => {
+                    for (let i = 0; i < 8; i++) {
+                        this.createBurstParticle(e.clientX, e.clientY);
+                    }
+                });
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createParticle(x, y) {
+                if (this.particles.length < 50) {
+                    this.particles.push({
+                        x: x,
+                        y: y,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5 - 0.5,
+                        size: Math.random() * 2 + 1,
+                        life: 1,
+                        color: ['#E86D5A', '#2E5266', '#52B788', '#F4A261'][Math.floor(Math.random() * 4)],
+                        type: 'trail'
+                    });
+                }
+            }
+
+            createBurstParticle(x, y) {
+                const angle = (Math.PI * 2 / 8) * this.particles.length;
+                const velocity = 3 + Math.random() * 2;
+                this.particles.push({
+                    x: x,
+                    y: y,
+                    vx: Math.cos(angle) * velocity,
+                    vy: Math.sin(angle) * velocity,
+                    size: Math.random() * 4 + 2,
+                    life: 1,
+                    color: ['#E86D5A', '#52B788'][Math.floor(Math.random() * 2)],
+                    type: 'burst'
+                });
+            }
+            
+            updateParticles() {
+                this.particles = this.particles.filter(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    if (p.type === 'trail') {
+                        p.vy += 0.05; // gravity
+                        p.life -= 0.02;
+                    } else {
+                        p.vx *= 0.98; // friction
+                        p.vy *= 0.98;
+                        p.life -= 0.015;
+                    }
+                    
+                    p.size *= 0.98;
+                    
+                    return p.life > 0 && p.size > 0.1;
+                });
+            }
+            
+            drawParticles() {
+                this.particles.forEach(p => {
+                    this.ctx.save();
+                    this.ctx.globalAlpha = p.life * 0.8;
+                    this.ctx.fillStyle = p.color;
+                    
+                    // Add glow effect
+                    this.ctx.shadowBlur = 10;
+                    this.ctx.shadowColor = p.color;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                });
+            }
+            
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.updateParticles();
+                this.drawParticles();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize particle system
+        new ParticleSystem();
+
+        // Advanced scroll-triggered animations
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: '.hero-section',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1
+            }
+        })
+        .to('.hero-content h1', { y: -100, opacity: 0.5 })
+        .to('.hero-content p', { y: -50, opacity: 0.3 }, '-=0.5')
+        .to('.morphing-shape', { scale: 1.5, opacity: 0 }, '-=0.5');
+
+        // Text scramble effect on hover
+        const scrambleTexts = document.querySelectorAll('.text-gradient');
+        scrambleTexts.forEach(text => {
+            const originalText = text.textContent;
+            text.addEventListener('mouseenter', () => {
+                let iteration = 0;
+                const interval = setInterval(() => {
+                    text.textContent = originalText
+                        .split("")
+                        .map((letter, index) => {
+                            if(index < iteration) {
+                                return originalText[index];
+                            }
+                            return String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                        })
+                        .join("");
+                    
+                    if(iteration >= originalText.length) {
+                        clearInterval(interval);
+                    }
+                    iteration += 1/3;
+                }, 30);
+            });
+        });
+
+        // 3D card tilt effect
+        VanillaTilt.init(document.querySelectorAll(".card-3d, .neumorphic"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+            gyroscope: true
+        });
+
+        // Liquid morph effect for shapes
+        const morphShapes = document.querySelectorAll('.morphing-shape');
+        morphShapes.forEach(shape => {
+            gsap.to(shape, {
+                duration: 20,
+                repeat: -1,
+                ease: "none",
+                css: {
+                    filter: "blur(0px)",
+                    transform: "rotate(360deg)"
+                }
+            });
+        });
+    </script>
+
+    <!-- VanillaTilt for 3D effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+</body>
+</html>
