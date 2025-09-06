@@ -1,0 +1,10 @@
+Este archivo necesita ser generado con una herramienta de conversión.
+
+Para crear el favicon.ico desde el SVG:
+1. Visita: https://realfavicongenerator.net/
+2. Sube el archivo favicon.svg
+3. Descarga el paquete de favicons
+4. Reemplaza este archivo con el favicon.ico generado
+
+O usa una herramienta de línea de comandos como ImageMagick:
+convert favicon.svg -resize 16x16 -resize 32x32 -resize 48x48 favicon.ico
