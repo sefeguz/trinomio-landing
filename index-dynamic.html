@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinomio - Espacio de Talleres Creativos</title>
+    <meta name="description" content="Trinomio: Un espacio de talleres donde hacer cobra sentido. Cerámica, madera, herrería y textil en City Bell, La Plata.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Trinomio - Espacio de Talleres Creativos">
+    <meta property="og:description" content="Un espacio de talleres donde hacer cobra sentido. Cerámica, madera, herrería y textil.">
+    <meta property="og:image" content="imagenes/logo-pared-trinomio.jpg">
+    <meta property="og:url" content="https://trinomio.com.ar">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+        :root {
+            --color-coral: #E86D5A;
+            --color-gray: #474747;
+            --color-blue: #2E5266;
+            --color-light: #F3E8DC;
+            --color-mint: #A7B7A1;
+            --color-yellow: #D9A441;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+
+        .text-coral { color: var(--color-coral); }
+        .text-gray { color: var(--color-gray); }
+        .text-blue { color: var(--color-blue); }
+        .bg-light { background-color: var(--color-light); }
+        .bg-coral { background-color: var(--color-coral); }
+        .bg-blue { background-color: var(--color-blue); }
+        .bg-mint { background-color: var(--color-mint); }
+        .bg-yellow { background-color: var(--color-yellow); }
+
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="bg-light text-gray">
+    <!-- App Container -->
+    <div id="app" x-data="trinomioApp()" x-init="init()">
+
+        <!-- Loading State -->
+        <div x-show="loading" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+            <div class="text-center">
+                <div class="w-16 h-16 border-4 border-coral border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p class="text-gray">Cargando...</p>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-40">
+            <nav class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <img src="favicon.svg" alt="Logo" class="w-10 h-10">
+                        <span class="text-2xl font-bold text-blue" x-text="config.siteName || 'Trinomio'"></span>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenu = !mobileMenu" class="md:hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path x-show="mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="#dimensiones" class="hover:text-coral transition-colors">Dimensiones</a>
+                        <a href="#talleres" class="hover:text-coral transition-colors">Talleres</a>
+                        <a href="#filosofia" class="hover:text-coral transition-colors">Filosofía</a>
+                        <a href="#ubicacion" class="hover:text-coral transition-colors">Ubicación</a>
+                        <a :href="'https://wa.me/' + (config.whatsapp || '542213627269')" target="_blank" class="bg-coral text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-all">
+                            Contactar
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div x-show="mobileMenu" x-transition class="md:hidden mt-4 pb-4 border-t pt-4">
+                    <div class="flex flex-col space-y-3">
+                        <a href="#dimensiones" @click="mobileMenu = false" class="hover:text-coral transition-colors">Dimensiones</a>
+                        <a href="#talleres" @click="mobileMenu = false" class="hover:text-coral transition-colors">Talleres</a>
+                        <a href="#filosofia" @click="mobileMenu = false" class="hover:text-coral transition-colors">Filosofía</a>
+                        <a href="#ubicacion" @click="mobileMenu = false" class="hover:text-coral transition-colors">Ubicación</a>
+                        <a :href="'https://wa.me/' + (config.whatsapp || '542213627269')" target="_blank" class="bg-coral text-white px-4 py-2 rounded-full text-center">
+                            Contactar
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="relative h-screen flex items-center justify-center mt-16">
+            <div class="absolute inset-0 z-0">
+                <img :src="config.heroImage || 'imagenes/espacio-taller-general.jpg'"
+                     alt="Espacio Trinomio"
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-transparent"></div>
+            </div>
+
+            <div class="relative z-10 text-center text-white px-4 max-w-4xl">
+                <h1 class="text-5xl md:text-7xl font-bold mb-4" x-text="config.heroTitle || 'Trinomio'"></h1>
+                <p class="text-xl md:text-2xl mb-8 font-light" x-text="config.heroSubtitle || 'Un espacio de talleres donde hacer cobra sentido'"></p>
+                <p class="text-2xl md:text-3xl italic mb-12" x-text="config.slogan || '¿Te equivocaste? Bien. Estás haciendo.'"></p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#talleres" class="bg-coral text-white px-8 py-4 rounded-full text-lg hover:bg-opacity-90 transition-all transform hover:scale-105">
+                        Ver Talleres
+                    </a>
+                    <a :href="config.taplink || 'https://taplink.cc/trinomiocb'" target="_blank" class="bg-white/20 backdrop-blur text-white border-2 border-white px-8 py-4 rounded-full text-lg hover:bg-white hover:text-gray transition-all">
+                        Más Información
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dimensiones Section -->
+        <section id="dimensiones" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4 text-blue">Nuestras Dimensiones</h2>
+                <p class="text-center text-xl mb-12 max-w-3xl mx-auto">
+                    Explora diferentes formas de expresión creativa
+                </p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <template x-for="dimension in dimensions" :key="dimension.id">
+                        <div class="bg-light rounded-xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
+                             :class="{'opacity-50': dimension.status === 'coming_soon'}">
+                            <div class="w-16 h-16 rounded-full mb-4 flex items-center justify-center text-white text-2xl"
+                                 :class="{
+                                     'bg-coral': dimension.color === 'coral',
+                                     'bg-blue': dimension.color === 'blue',
+                                     'bg-mint': dimension.color === 'mint',
+                                     'bg-yellow': dimension.color === 'yellow'
+                                 }">
+                                <span x-text="dimension.icon || '🎨'"></span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2" x-text="dimension.name"></h3>
+                            <p class="text-gray-600 mb-4" x-text="dimension.description"></p>
+                            <template x-if="dimension.status === 'coming_soon'">
+                                <span class="inline-block bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-sm">
+                                    Próximamente
+                                </span>
+                            </template>
+                            <template x-if="dimension.status === 'active'">
+                                <a href="#talleres" class="inline-block text-coral font-bold hover:underline">
+                                    Ver talleres →
+                                </a>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+        <!-- Talleres Section -->
+        <section id="talleres" class="py-20 bg-light">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4 text-blue">Talleres Disponibles</h2>
+                <p class="text-center text-xl mb-12 max-w-3xl mx-auto">
+                    Dimensión Creativa - Talleres actuales
+                </p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <template x-for="taller in talleres" :key="taller.id">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                            <template x-if="taller.image">
+                                <img :src="taller.image" :alt="taller.name" class="w-full h-48 object-cover">
+                            </template>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-2 text-blue" x-text="taller.name"></h3>
+                                <p class="text-gray-600 mb-4" x-text="taller.description"></p>
+
+                                <div class="space-y-2 mb-4">
+                                    <template x-if="taller.schedule">
+                                        <div class="flex items-center text-sm text-gray-600">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span x-text="taller.schedule"></span>
+                                        </div>
+                                    </template>
+
+                                    <template x-if="taller.duration">
+                                        <div class="flex items-center text-sm text-gray-600">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                            <span x-text="taller.duration"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="flex justify-between items-center">
+                                    <span class="text-2xl font-bold text-coral" x-text="'$' + taller.price"></span>
+                                    <a :href="'https://wa.me/' + (config.whatsapp || '542213627269') + '?text=Hola! Me interesa el taller de ' + encodeURIComponent(taller.name)"
+                                       target="_blank"
+                                       class="bg-coral text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-all">
+                                        Inscribirme
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <template x-if="talleres.length === 0">
+                    <div class="text-center py-12">
+                        <p class="text-gray-600">Cargando talleres disponibles...</p>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- Filosofía Section -->
+        <section id="filosofia" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-4xl font-bold text-center mb-12 text-blue">Nuestra Filosofía</h2>
+
+                    <div class="grid md:grid-cols-3 gap-8 mb-12">
+                        <template x-for="value in philosophyValues" :key="value.id">
+                            <div class="text-center">
+                                <div class="w-20 h-20 bg-coral rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-3xl" x-text="value.icon || '✨'"></span>
+                                </div>
+                                <h3 class="text-xl font-bold mb-2" x-text="value.title"></h3>
+                                <p class="text-gray-600" x-text="value.description"></p>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="bg-light rounded-xl p-8 text-center">
+                        <p class="text-2xl italic text-gray mb-4">"El proceso es el valor"</p>
+                        <p class="text-lg">
+                            En Trinomio creemos que el verdadero aprendizaje está en el hacer,
+                            en equivocarse, en volver a intentar. No buscamos la perfección,
+                            buscamos la experiencia genuina del crear.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ubicación Section -->
+        <section id="ubicacion" class="py-20 bg-light">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4 text-blue">Dónde Encontrarnos</h2>
+                <p class="text-center text-xl mb-12" x-text="config.address || 'Cno. Gral. Belgrano 480, City Bell'"></p>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                        <!-- Mapa -->
+                        <div class="h-96">
+                            <iframe
+                                src="https://www.openstreetmap.org/export/embed.html?bbox=-58.06074142456056%2C-34.88346274324044%2C-58.05274152755738%2C-34.87846274324044&amp;layer=mapnik&amp;marker=-34.88096274324044%2C-58.056742976988595"
+                                style="border:0; width: 100%; height: 100%;"
+                                loading="lazy">
+                            </iframe>
+                        </div>
+
+                        <div class="p-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h3 class="font-bold text-lg mb-4">Información de Contacto</h3>
+                                    <div class="space-y-3">
+                                        <a :href="'https://wa.me/' + (config.whatsapp || '542213627269')"
+                                           target="_blank"
+                                           class="flex items-center text-gray-600 hover:text-coral">
+                                            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                            </svg>
+                                            <span x-text="config.whatsappDisplay || '+54 221 362-7269'"></span>
+                                        </a>
+
+                                        <a :href="'https://instagram.com/' + (config.instagram || 'trinomiocb')"
+                                           target="_blank"
+                                           class="flex items-center text-gray-600 hover:text-coral">
+                                            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
+                                            </svg>
+                                            <span x-text="'@' + (config.instagram || 'trinomiocb')"></span>
+                                        </a>
+
+                                        <template x-if="config.email">
+                                            <a :href="'mailto:' + config.email"
+                                               class="flex items-center text-gray-600 hover:text-coral">
+                                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                                </svg>
+                                                <span x-text="config.email"></span>
+                                            </a>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="font-bold text-lg mb-4">Cómo Llegar</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Estamos ubicados en City Bell, La Plata.
+                                        Fácil acceso desde Camino General Belgrano.
+                                    </p>
+                                    <a :href="'https://maps.google.com/?q=' + (config.coordinates || '-34.88096274324044,-58.056742976988595')"
+                                       target="_blank"
+                                       class="inline-flex items-center bg-coral text-white px-6 py-3 rounded-full hover:bg-opacity-90 transition-all">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                        Abrir en Google Maps
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray text-white py-12">
+            <div class="container mx-auto px-4">
+                <div class="text-center">
+                    <div class="flex justify-center items-center mb-4">
+                        <img src="favicon.svg" alt="Logo" class="w-12 h-12 mr-3 filter brightness-0 invert">
+                        <span class="text-2xl font-bold">Trinomio</span>
+                    </div>
+                    <p class="mb-6" x-text="config.footerText || 'Un espacio de talleres donde hacer cobra sentido'"></p>
+
+                    <div class="flex justify-center space-x-6 mb-6">
+                        <a :href="'https://wa.me/' + (config.whatsapp || '542213627269')" target="_blank" class="hover:text-coral transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                        </a>
+                        <a :href="'https://instagram.com/' + (config.instagram || 'trinomiocb')" target="_blank" class="hover:text-coral transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
+                            </svg>
+                        </a>
+                        <a :href="config.taplink || 'https://taplink.cc/trinomiocb'" target="_blank" class="hover:text-coral transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <p class="text-sm opacity-75">
+                        © <span x-text="new Date().getFullYear()"></span> Trinomio. Todos los derechos reservados.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function trinomioApp() {
+            return {
+                loading: true,
+                mobileMenu: false,
+                config: {},
+                dimensions: [],
+                talleres: [],
+                philosophyValues: [],
+                apiUrl: window.location.hostname === 'localhost'
+                    ? 'http://localhost:1337/api'
+                    : 'http://168.138.135.98/api',
+
+                async init() {
+                    // Cargar datos del CMS o usar datos por defecto
+                    await this.loadData();
+                    this.loading = false;
+                },
+
+                async loadData() {
+                    try {
+                        // Intentar cargar desde API
+                        await Promise.all([
+                            this.loadConfig(),
+                            this.loadDimensions(),
+                            this.loadTalleres(),
+                            this.loadPhilosophy()
+                        ]);
+                    } catch (error) {
+                        console.log('Usando datos por defecto', error);
+                        // Usar datos por defecto si falla la API
+                        this.useDefaultData();
+                    }
+                },
+
+                async loadConfig() {
+                    try {
+                        const response = await fetch(`${this.apiUrl}/configuracion?populate=*`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.data) {
+                                this.config = this.transformConfig(data.data);
+                                return;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error cargando configuración:', error);
+                    }
+
+                    // Datos por defecto
+                    this.config = {
+                        siteName: 'Trinomio',
+                        heroTitle: 'Trinomio',
+                        heroSubtitle: 'Un espacio de talleres donde hacer cobra sentido',
+                        slogan: '¿Te equivocaste? Bien. Estás haciendo.',
+                        heroImage: 'imagenes/espacio-taller-general.jpg',
+                        whatsapp: '542213627269',
+                        whatsappDisplay: '+54 221 362-7269',
+                        instagram: 'trinomiocb',
+                        taplink: 'https://taplink.cc/trinomiocb',
+                        address: 'Cno. Gral. Belgrano 480, City Bell',
+                        coordinates: '-34.88096274324044,-58.056742976988595',
+                        footerText: 'Un espacio de talleres donde hacer cobra sentido'
+                    };
+                },
+
+                async loadDimensions() {
+                    try {
+                        const response = await fetch(`${this.apiUrl}/dimensiones?populate=*`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.data && data.data.length > 0) {
+                                this.dimensions = data.data.map(d => this.transformDimension(d));
+                                return;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error cargando dimensiones:', error);
+                    }
+
+                    // Datos por defecto
+                    this.dimensions = [
+                        {
+                            id: 1,
+                            name: 'Dimensión Creativa',
+                            description: 'Explora tu creatividad a través de diferentes técnicas y materiales',
+                            icon: '🎨',
+                            color: 'coral',
+                            status: 'active'
+                        },
+                        {
+                            id: 2,
+                            name: 'Dimensión Madera',
+                            description: 'Trabajos en madera, carpintería y restauración',
+                            icon: '🪵',
+                            color: 'yellow',
+                            status: 'coming_soon'
+                        },
+                        {
+                            id: 3,
+                            name: 'Dimensión Herrería',
+                            description: 'Forja, soldadura y trabajo con metales',
+                            icon: '⚒️',
+                            color: 'blue',
+                            status: 'coming_soon'
+                        },
+                        {
+                            id: 4,
+                            name: 'Dimensión Textil',
+                            description: 'Costura, tejido y diseño de indumentaria',
+                            icon: '🧵',
+                            color: 'mint',
+                            status: 'coming_soon'
+                        }
+                    ];
+                },
+
+                async loadTalleres() {
+                    try {
+                        const response = await fetch(`${this.apiUrl}/talleres?populate=*&filters[active][$eq]=true`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.data && data.data.length > 0) {
+                                this.talleres = data.data.map(t => this.transformTaller(t));
+                                return;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error cargando talleres:', error);
+                    }
+
+                    // Datos por defecto
+                    this.talleres = [
+                        {
+                            id: 1,
+                            name: 'Cerámica',
+                            description: 'Taller de modelado en arcilla, técnicas de torno y esmaltado. Para todos los niveles.',
+                            schedule: 'Martes y Jueves 18:30-20:30',
+                            duration: '8 clases',
+                            price: '18000',
+                            image: 'imagenes/ceramica-taller.jpg'
+                        },
+                        {
+                            id: 2,
+                            name: 'Macramé',
+                            description: 'Aprende a crear piezas decorativas y funcionales con técnicas de nudos.',
+                            schedule: 'Miércoles 17:00-19:00',
+                            duration: '4 clases',
+                            price: '12000',
+                            image: 'imagenes/macrame-taller.jpg'
+                        },
+                        {
+                            id: 3,
+                            name: 'Pintura',
+                            description: 'Explora diferentes técnicas: acrílico, óleo y acuarela. Desarrolla tu estilo propio.',
+                            schedule: 'Lunes y Viernes 16:00-18:00',
+                            duration: '8 clases',
+                            price: '16000',
+                            image: 'imagenes/pintura-taller.jpg'
+                        }
+                    ];
+                },
+
+                async loadPhilosophy() {
+                    try {
+                        const response = await fetch(`${this.apiUrl}/filosofia-valores?populate=*`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.data && data.data.length > 0) {
+                                this.philosophyValues = data.data.map(v => this.transformValue(v));
+                                return;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error cargando filosofía:', error);
+                    }
+
+                    // Datos por defecto
+                    this.philosophyValues = [
+                        {
+                            id: 1,
+                            title: 'Proceso',
+                            description: 'Valoramos el camino más que el destino',
+                            icon: '🌱'
+                        },
+                        {
+                            id: 2,
+                            title: 'Comunidad',
+                            description: 'Creamos vínculos a través del hacer compartido',
+                            icon: '🤝'
+                        },
+                        {
+                            id: 3,
+                            title: 'Expresión',
+                            description: 'Cada creación es única y personal',
+                            icon: '✨'
+                        }
+                    ];
+                },
+
+                transformConfig(data) {
+                    const attrs = data.attributes || {};
+                    return {
+                        siteName: attrs.siteName || 'Trinomio',
+                        heroTitle: attrs.heroTitle || 'Trinomio',
+                        heroSubtitle: attrs.heroSubtitle || 'Un espacio de talleres donde hacer cobra sentido',
+                        slogan: attrs.slogan || '¿Te equivocaste? Bien. Estás haciendo.',
+                        heroImage: attrs.heroImage?.data?.attributes?.url || 'imagenes/espacio-taller-general.jpg',
+                        whatsapp: attrs.whatsapp || '542213627269',
+                        whatsappDisplay: attrs.whatsappDisplay || '+54 221 362-7269',
+                        instagram: attrs.instagram || 'trinomiocb',
+                        email: attrs.email,
+                        taplink: attrs.taplink || 'https://taplink.cc/trinomiocb',
+                        address: attrs.address || 'Cno. Gral. Belgrano 480, City Bell',
+                        coordinates: attrs.coordinates || '-34.88096274324044,-58.056742976988595',
+                        footerText: attrs.footerText || 'Un espacio de talleres donde hacer cobra sentido'
+                    };
+                },
+
+                transformDimension(data) {
+                    const attrs = data.attributes || {};
+                    return {
+                        id: data.id,
+                        name: attrs.name,
+                        description: attrs.description,
+                        icon: attrs.icon || '🎨',
+                        color: attrs.color || 'coral',
+                        status: attrs.status || 'coming_soon'
+                    };
+                },
+
+                transformTaller(data) {
+                    const attrs = data.attributes || {};
+                    return {
+                        id: data.id,
+                        name: attrs.name,
+                        description: attrs.description,
+                        schedule: attrs.schedule,
+                        duration: attrs.duration,
+                        price: attrs.price,
+                        image: attrs.image?.data?.attributes?.url || null
+                    };
+                },
+
+                transformValue(data) {
+                    const attrs = data.attributes || {};
+                    return {
+                        id: data.id,
+                        title: attrs.title,
+                        description: attrs.description,
+                        icon: attrs.icon || '✨'
+                    };
+                },
+
+                useDefaultData() {
+                    // Los datos por defecto ya están cargados en cada función load
+                    console.log('Usando datos por defecto');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

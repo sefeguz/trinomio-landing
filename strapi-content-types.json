@@ -1,0 +1,277 @@
+{
+  "content-types": [
+    {
+      "name": "Configuracion",
+      "singularName": "configuracion",
+      "pluralName": "configuraciones",
+      "displayName": "Configuración General",
+      "description": "Configuración general del sitio",
+      "attributes": {
+        "siteName": {
+          "type": "string",
+          "required": true,
+          "default": "Trinomio"
+        },
+        "heroTitle": {
+          "type": "string",
+          "required": true,
+          "default": "Trinomio"
+        },
+        "heroSubtitle": {
+          "type": "string",
+          "required": true,
+          "default": "Un espacio de talleres donde hacer cobra sentido"
+        },
+        "slogan": {
+          "type": "string",
+          "required": true,
+          "default": "¿Te equivocaste? Bien. Estás haciendo."
+        },
+        "heroImage": {
+          "type": "media",
+          "allowedTypes": ["images"],
+          "required": false
+        },
+        "whatsapp": {
+          "type": "string",
+          "required": true,
+          "default": "542213627269"
+        },
+        "whatsappDisplay": {
+          "type": "string",
+          "required": true,
+          "default": "+54 221 362-7269"
+        },
+        "instagram": {
+          "type": "string",
+          "required": true,
+          "default": "trinomiocb"
+        },
+        "email": {
+          "type": "email",
+          "required": false
+        },
+        "taplink": {
+          "type": "string",
+          "required": false,
+          "default": "https://taplink.cc/trinomiocb"
+        },
+        "address": {
+          "type": "string",
+          "required": true,
+          "default": "Cno. Gral. Belgrano 480, City Bell"
+        },
+        "coordinates": {
+          "type": "string",
+          "required": true,
+          "default": "-34.88096274324044,-58.056742976988595"
+        },
+        "footerText": {
+          "type": "text",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "Dimension",
+      "singularName": "dimension",
+      "pluralName": "dimensiones",
+      "displayName": "Dimensiones",
+      "description": "Las diferentes dimensiones/áreas de talleres",
+      "attributes": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "text",
+          "required": true
+        },
+        "icon": {
+          "type": "string",
+          "required": false,
+          "default": "🎨"
+        },
+        "color": {
+          "type": "enumeration",
+          "enum": ["coral", "blue", "mint", "yellow"],
+          "default": "coral",
+          "required": true
+        },
+        "status": {
+          "type": "enumeration",
+          "enum": ["active", "coming_soon"],
+          "default": "coming_soon",
+          "required": true
+        },
+        "order": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    },
+    {
+      "name": "Taller",
+      "singularName": "taller",
+      "pluralName": "talleres",
+      "displayName": "Talleres",
+      "description": "Los talleres disponibles",
+      "attributes": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "text",
+          "required": true
+        },
+        "schedule": {
+          "type": "string",
+          "required": false
+        },
+        "duration": {
+          "type": "string",
+          "required": false
+        },
+        "price": {
+          "type": "decimal",
+          "required": true
+        },
+        "image": {
+          "type": "media",
+          "allowedTypes": ["images"],
+          "required": false
+        },
+        "active": {
+          "type": "boolean",
+          "default": true
+        },
+        "dimension": {
+          "type": "relation",
+          "relation": "manyToOne",
+          "target": "api::dimension.dimension"
+        },
+        "maxStudents": {
+          "type": "integer",
+          "default": 10
+        },
+        "startDate": {
+          "type": "date",
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "FilosofiaValor",
+      "singularName": "filosofia-valor",
+      "pluralName": "filosofia-valores",
+      "displayName": "Valores de Filosofía",
+      "description": "Los valores que representan la filosofía de Trinomio",
+      "attributes": {
+        "title": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "text",
+          "required": true
+        },
+        "icon": {
+          "type": "string",
+          "required": false,
+          "default": "✨"
+        },
+        "order": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    },
+    {
+      "name": "Testimonio",
+      "singularName": "testimonio",
+      "pluralName": "testimonios",
+      "displayName": "Testimonios",
+      "description": "Testimonios de alumnos",
+      "attributes": {
+        "author": {
+          "type": "string",
+          "required": true
+        },
+        "text": {
+          "type": "text",
+          "required": true
+        },
+        "photo": {
+          "type": "media",
+          "allowedTypes": ["images"],
+          "required": false
+        },
+        "workshop": {
+          "type": "string",
+          "required": false
+        },
+        "active": {
+          "type": "boolean",
+          "default": true
+        },
+        "featured": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    {
+      "name": "Inscripcion",
+      "singularName": "inscripcion",
+      "pluralName": "inscripciones",
+      "displayName": "Inscripciones",
+      "description": "Registro de inscripciones a talleres",
+      "attributes": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "email": {
+          "type": "email",
+          "required": true
+        },
+        "phone": {
+          "type": "string",
+          "required": true
+        },
+        "taller": {
+          "type": "relation",
+          "relation": "manyToOne",
+          "target": "api::taller.taller"
+        },
+        "message": {
+          "type": "text",
+          "required": false
+        },
+        "status": {
+          "type": "enumeration",
+          "enum": ["pending", "confirmed", "cancelled"],
+          "default": "pending"
+        },
+        "createdDate": {
+          "type": "datetime",
+          "required": true
+        }
+      }
+    }
+  ],
+  "api-permissions": {
+    "public": {
+      "configuracion": ["find"],
+      "dimension": ["find"],
+      "taller": ["find"],
+      "filosofia-valor": ["find"],
+      "testimonio": ["find"],
+      "inscripcion": ["create"]
+    },
+    "authenticated": {
+      "all": ["find", "findOne", "create", "update", "delete"]
+    }
+  }
+}
